@@ -15,13 +15,11 @@ return require('packer').startup(function()
   use 'ryanoasis/vim-devicons'
 
 
-  use 'sainnhe/sonokai'
-  use 'arcticicestudio/nord-vim'
-  use 'joshdick/onedark.vim'
-  use 'morhetz/gruvbox'
+  -- Theming
   use 'sainnhe/gruvbox-material'
 
-  use 'ziglang/zig.vim'
+
+  -- Autocompletion
 
   use 'neovim/nvim-lspconfig'
   use {
@@ -37,4 +35,5 @@ return require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'
 
   use 'lervag/vimtex'
+  use 'ziglang/zig.vim'
 end)
