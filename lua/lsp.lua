@@ -73,9 +73,9 @@ end
 
 require('lspconfig').arduino_language_server.setup({
   cmd = {
-    "/home/wj/bin/arduino-language-server",
-    "-cli-config", "/home/wj/.arduino15/arduino-cli.yaml",
-    "-cli", "/home/wj/bin/arduino-cli",
+    "~/bin/arduino-language-server",
+    "-cli-config", "~/.arduino15/arduino-cli.yaml",
+    "-cli", "~/bin/arduino-cli",
     "-clangd", "/usr/bin/clangd-12",
     "-cli-daemon-addr", "localhost:50051"
   }
