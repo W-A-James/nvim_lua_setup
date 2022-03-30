@@ -1,7 +1,12 @@
 require('plugins')
 
 local set = vim.opt
+local G = vim.g
 
+vim.cmd [[
+  packadd termdebug
+  tnoremap <Esc> <C-\><C-n>
+]]
 ---------------------------Indentation-----------------------------------------
 
 set.tabstop=2
@@ -31,27 +36,28 @@ set.backupdir='.backup/.~/.backup,/tmp//'
 set.backupdir='.swp/.~/.swp/,/tmp//'
 set.undodir='.undo/.~/.undo/./tmp//'
 
-vim.g.backupdir='/home/wj/.backup'
-vim.g.directory='/home/wj/.swp'
-vim.g.undodir='/home/wj/.undo'
+G.backupdir='/home/wj/.backup'
+G.directory='/home/wj/.swp'
+G.undodir='/home/wj/.undo'
 
 
-vim.g['NERDTreeShowHidden'] = '1'
+G['NERDTreeShowHidden'] = '1'
 
 ------------------------Gruvbox material theming--------------------------------
 set.background='dark'
-vim.g['gruvbox_material_background'] = 'hard'
-vim.g['gruvbox_material_better_performance'] = '1'
-vim.g['gruvbox_material_enable_bold'] = '1'
-vim.g['gruvbox_material_enable_italic'] = '1'
-vim.g['gruvbox_material_transparent_background'] = '0'
+G['gruvbox_material_background'] = 'hard'
+G['gruvbox_material_better_performance'] = '1'
+G['gruvbox_material_enable_bold'] = '1'
+G['gruvbox_material_enable_italic'] = '1'
+G['gruvbox_material_transparent_background'] = '0'
 
 vim.cmd [[
 	colorscheme gruvbox-material
 ]]
 
 
-vim.g.mapleader = ' '
+G.mapleader = ' '
+
 
 -- Lualine setup
 require('lualine').setup {
@@ -98,11 +104,10 @@ vim.cmd [[
 
 vim.cmd [[
   function! SetRustDebugger()
-      packadd termdebug
       let g:termdebugger="rust-gdb"
-      nnoremap <Leader>s :Step<CR>
-      nnoremap <Leader>o :Over<CR>
-      nnoremap <Leader>c :Continue<CR>
+      tnoremap s is<CR><ESC>
+      tnoremap o io<CR><ESC>
+      tnoremap c ic<CR><ESC>
       nnoremap <c-b> :Break<CR>
   endfunction
 

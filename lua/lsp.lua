@@ -23,6 +23,7 @@ end
 
 map('n', '<Leader>b', ':NERDTreeToggle<CR>')
 map('n', '<Leader><Leader>', 'gt')
+map('n', '<leader>t', ':split term://zsh<CR>')
 
 -- Suggestions
 map('i', '<c-s>', '<ESC>:w<CR>i')
@@ -53,7 +54,8 @@ local servers = {
   'jsonls',
   'cssls',
   'html',
-  'ltex'
+  'ltex',
+  'pyright'
 }
 
 vim.cmd [[ autocmd BufRead,BufNewFile *.org set filetype=org ]]
