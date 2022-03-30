@@ -31,9 +31,9 @@ set.backupdir='.backup/.~/.backup,/tmp//'
 set.backupdir='.swp/.~/.swp/,/tmp//'
 set.undodir='.undo/.~/.undo/./tmp//'
 
-vim.g.backupdir='/home/wj/.backup'
-vim.g.directory='/home/wj/.swp'
-vim.g.undodir='/home/wj/.undo'
+vim.g.backupdir='~/.backup'
+vim.g.directory='~/.swp'
+vim.g.undodir='~/.undo'
 
 
 vim.g['NERDTreeShowHidden'] = '1'
