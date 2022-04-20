@@ -6,14 +6,15 @@ local on_attach = function(client, bufnr)
     bmap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     bmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     bmap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    bmap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    bmap(bufnr, 'n', '<C-K>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     bmap(bufnr, 'n', '<Leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
     bmap(bufnr, 'n', '<Leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
     bmap(bufnr, 'n', '<Leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
     bmap(bufnr, 'n', '<Leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     bmap(bufnr, 'n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     bmap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    bmap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts) bmap(bufnr, 'n', '<Leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    bmap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    bmap(bufnr, 'n', '<Leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
 local map = function(mode, keystrokes, effect)
@@ -26,7 +27,7 @@ map('n', '<Leader><Leader>', 'gt')
 map('n', '<leader>t', ':split term://zsh<CR>')
 
 -- Suggestions
-map('i', '<c-s>', '<ESC>:w<CR>i')
+map('i', '<c-s>', '<ESC>:w<CR>a')
 map('n', '<c-s>', ':w<CR>')
 map('n', '<c-h>', '<c-w><c-h>')
 map('n', '<c-j>', '<c-w><c-j>')
@@ -34,7 +35,7 @@ map('n', '<c-k>', '<c-w><c-k>')
 map('n', '<c-l>', '<c-w><c-l>')
 map('n', '<Leader><CR>', ':NERDTreeRefreshRoot<CR>')
 map('n', 'Y', 'yy')
-map('n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
+map('n', '<Leader>e', ':lua vim.diagnostic.open_float()<CR>')
 map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 map('n', '<Leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
@@ -45,7 +46,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local servers = {
   'clangd',
-  'rls',
+  'rust_analyzer',
   'tsserver',
   'gopls',
   'ocamllsp',
@@ -55,7 +56,8 @@ local servers = {
   'cssls',
   'html',
   'ltex',
-  'pyright'
+  'pyright',
+  'taplo'
 }
 
 vim.cmd [[ autocmd BufRead,BufNewFile *.org set filetype=org ]]
@@ -109,3 +111,14 @@ require('lspconfig').sumneko_lua.setup({
     },
   },
 })
+
+-- Enable floating window
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics,
+  {
+    virtual_text = false,
+    signs = true,
+    update_in_insert = false,
+    underline = true,
+  }
+)

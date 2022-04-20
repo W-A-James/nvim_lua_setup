@@ -58,37 +58,14 @@ vim.cmd [[
 
 G.mapleader = ' '
 
-
 -- Lualine setup
-require('lualine').setup {
+require('lualine').setup ({
   options = {
-    icons_enabled = true,
-    theme = 'gruvbox-material',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {},
-    always_divide_middle = true,
-    globalstatus = false,
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  extensions = {}
-}
+    theme = "gruvbox-material",
+    section_separators = '',
+    component_separators = '',
+  }
+})
 
 require('lsp')
 require('completion')
@@ -123,7 +100,7 @@ vim.cmd [[
 
 ---------------------------Treesitter-------------------------------------------
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "maintained",
+  ensure_installed = "all",
   sync_install = false,
   highlight = {
     enable = true,
