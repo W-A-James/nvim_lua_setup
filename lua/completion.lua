@@ -2,7 +2,7 @@
 
 local luasnip = require('luasnip')
 
---nvim-cmp setup
+-- nvim-cmp setup
 
 local cmp = require('cmp')
 cmp.setup {
