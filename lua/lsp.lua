@@ -45,8 +45,10 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local servers = {
-  'clangd',
-  'rust_analyzer',
+  'ccls',
+  'cmake',
+  'hls',
+  -- 'clangd',
   'tsserver',
   'gopls',
   'ocamllsp',
@@ -59,6 +61,7 @@ local servers = {
   'pyright',
   'taplo'
 }
+local lspconfig = require('lspconfig')
 
 vim.cmd [[ autocmd BufRead,BufNewFile *.org set filetype=org ]]
 
@@ -73,7 +76,28 @@ for _, lsp in pairs(servers) do
   }
 end
 
-require('lspconfig').arduino_language_server.setup({
+local rust_tools_opts = {
+  tools = {
+    autoSetHints = true,
+    hover_with_actions = true,
+    inlay_hints = {
+      show_parameter_hints = true,
+      parameter_hints_prefix = "",
+      other_hints_prefix = "",
+    },
+  },
+  server = {
+    ["rust-analyzer"] = {
+      checkOnSave = {
+        command = "clippy"
+      }
+    }
+  }
+}
+
+require('rust-tools').setup(rust_tools_opts)
+
+lspconfig.arduino_language_server.setup({
   cmd = {
     "~/bin/arduino-language-server",
     "-cli-config", "~/.arduino15/arduino-cli.yaml",
@@ -83,11 +107,14 @@ require('lspconfig').arduino_language_server.setup({
   }
 })
 
+
+
+
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-require('lspconfig').sumneko_lua.setup({
+lspconfig.sumneko_lua.setup({
    settings = {
     Lua = {
       runtime = {
