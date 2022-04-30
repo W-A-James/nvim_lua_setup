@@ -1,25 +1,32 @@
 ------------------------- Mappings ---------------------------------------------
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     local bmap = vim.api.nvim_buf_set_keymap
-    local opts = {silent=true, noremap=true}
-    bmap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    bmap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    bmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    bmap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    bmap(bufnr, 'n', '<C-K>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    bmap(bufnr, 'n', '<Leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    bmap(bufnr, 'n', '<Leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    bmap(bufnr, 'n', '<Leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    bmap(bufnr, 'n', '<Leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    bmap(bufnr, 'n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    bmap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    bmap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    bmap(bufnr, 'n', '<Leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    local with_callback = function (callback)
+      return {silent=true, noremap=true,callback = callback}
+    end
+    local buf = vim.lsp.buf
+    bmap(bufnr, 'n', 'gD', '', with_callback(buf.declaration))
+    bmap(bufnr, 'n', 'gd', '', with_callback(buf.definition))
+    bmap(bufnr, 'n', 'K', '', with_callback(buf.hover))
+    bmap(bufnr, 'n', 'gi', '', with_callback(buf.implementation))
+    bmap(bufnr, 'n', '<C-K>', '', with_callback(buf.signature_help))
+    bmap(bufnr, 'n', '<Leader>wa', '', with_callback(buf.add_workspace_folder))
+    bmap(bufnr, 'n', '<Leader>wr', '', with_callback(buf.remove_workspace_folder))
+    bmap(bufnr, 'n', '<Leader>wl', '', with_callback(buf.list_workspace_folders))
+    bmap(bufnr, 'n', '<Leader>D', '', with_callback(buf.type_definition))
+    bmap(bufnr, 'n', '<Leader>rn', '', with_callback(buf.rename))
+    bmap(bufnr, 'n', '<Leader>ca', '', with_callback(buf.code_action))
+    bmap(bufnr, 'n', 'gr', '', with_callback(buf.references))
+    bmap(bufnr, 'n', '<Leader>f', '', with_callback(buf.formatting))
 end
 
 local map = function(mode, keystrokes, effect)
     local opts = {noremap = true, silent=true}
     vim.api.nvim_set_keymap(mode, keystrokes, effect, opts)
+end
+
+local map_cb = function(mode, keystrokes, callback)
+  vim.api.nvim_set_keymap(mode, keystrokes, '', {noremap=true, silent=true, callback=callback})
 end
 
 map('n', '<Leader>b', ':NERDTreeToggle<CR>')
@@ -35,10 +42,11 @@ map('n', '<c-k>', '<c-w><c-k>')
 map('n', '<c-l>', '<c-w><c-l>')
 map('n', '<Leader><CR>', ':NERDTreeRefreshRoot<CR>')
 map('n', 'Y', 'yy')
-map('n', '<Leader>e', ':lua vim.diagnostic.open_float()<CR>')
-map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-map('n', '<Leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
+
+map_cb('n', '<Leader>e', vim.diagnostic.open_float)
+map_cb('n', '[d', vim.diagnostic.goto_prev)
+map_cb('n', ']d', vim.diagnostic.goto_next)
+map_cb('n', '<Leader>q', vim.diagnostic.setloclist)
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -106,8 +114,6 @@ lspconfig.arduino_language_server.setup({
     "-cli-daemon-addr", "localhost:50051"
   }
 })
-
-
 
 
 local runtime_path = vim.split(package.path, ';')

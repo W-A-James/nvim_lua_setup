@@ -7,6 +7,7 @@ vim.cmd [[
   packadd termdebug
   tnoremap <Esc> <C-\><C-n>
 ]]
+
 ---------------------------Indentation-----------------------------------------
 
 set.tabstop=2
@@ -71,31 +72,36 @@ require('lsp')
 require('completion')
 
 
-vim.cmd [[
-  function! SetOcamlFormat()
-    nnoremap <leader>f :w<CR> :!ocamlformat -i %<CR><CR>:e<CR>
-  endfunction
+-- Setup ocamlformat
+vim.api.nvim_create_autocmd({"BufRead, BufNewFile"}, {
+  pattern = {"*.ml", "*.mli"},
+  callback = function()
+    vim.keymap.set('n', '<leader>f', ':!ocamlformat -i %<CR><CR>:e<CR>')
+  end
 
-  autocmd BufRead,BufNewFile *.ml call SetOcamlFormat()
-]]
 
-vim.cmd [[
-  function! SetRustDebugger()
-      let g:termdebugger="rust-gdb"
-      tnoremap s is<CR><ESC>
-      tnoremap o io<CR><ESC>
-      tnoremap c ic<CR><ESC>
-      nnoremap <c-b> :Break<CR>
-  endfunction
+})
 
-  autocmd BufRead,BufNewFile *.rs call SetRustDebugger()
-]]
-
+-- Setup RustDebugger
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = {"*.rs"},
+  callback = function()
+    G["termdebugger"] = "rust-gdb"
+    vim.keymap.set("t", "s", "is<CR><ESC>")
+    vim.keymap.set("t", "o", "io<CR><ESC>")
+    vim.keymap.set("t", "c", "ic<CR><ESC>")
+    vim.keymap.set("n", "<C-b>", ":Break<CR>")
+  end
+})
 
 ---------------------------Set spell checking-----------------------------------
-vim.cmd [[
-  autocmd BufRead,BufNewFile *.md,*.txt setlocal spell
-]]
+
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = {"*.md", "*.txt"},
+  callback = function()
+    set.spell = true
+  end
+})
 
 
 ---------------------------Treesitter-------------------------------------------
