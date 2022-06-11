@@ -2,7 +2,7 @@
 local on_attach = function(_, bufnr)
     local bmap = vim.api.nvim_buf_set_keymap
     local with_callback = function (callback)
-      return {silent=true, noremap=true,callback = callback}
+      return {silent=true, noremap=true,callback=callback}
     end
     local buf = vim.lsp.buf
     bmap(bufnr, 'n', 'gD', '', with_callback(buf.declaration))
@@ -57,6 +57,7 @@ local servers = {
   'cmake',
   'hls',
   -- 'clangd',
+  'rust_analyzer',
   'tsserver',
   'gopls',
   'ocamllsp',
@@ -95,6 +96,7 @@ local rust_tools_opts = {
     },
   },
   server = {
+    on_attach = on_attach,
     ["rust-analyzer"] = {
       checkOnSave = {
         command = "clippy"

@@ -41,4 +41,10 @@ return require('packer').startup(function()
 
   use 'lervag/vimtex'
   use 'ziglang/zig.vim'
+
+  use { 'nvim-orgmode/orgmode',
+    config = function()
+      require('orgmode').setup{}
+    end
+  }
 end)
