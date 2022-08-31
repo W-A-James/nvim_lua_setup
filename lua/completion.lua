@@ -47,7 +47,6 @@ cmp.setup {
     { name = 'luasnip' },
     { name = 'path'},
     { name = 'buffer'},
-    { name = 'latex_symbols'}
   },
   {
     { name = 'buffer' }

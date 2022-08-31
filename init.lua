@@ -71,29 +71,6 @@ require('lualine').setup ({
 require('lsp')
 require('completion')
 
-
--- Setup ocamlformat
-vim.api.nvim_create_autocmd({"BufRead, BufNewFile"}, {
-  pattern = {"*.ml", "*.mli"},
-  callback = function()
-    vim.keymap.set('n', '<leader>f', ':!ocamlformat -i %<CR><CR>:e<CR>')
-  end
-
-
-})
-
--- Setup RustDebugger
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-  pattern = {"*.rs"},
-  callback = function()
-    G["termdebugger"] = "rust-gdb"
-    vim.keymap.set("t", "s", "is<CR><ESC>")
-    vim.keymap.set("t", "o", "io<CR><ESC>")
-    vim.keymap.set("t", "c", "ic<CR><ESC>")
-    vim.keymap.set("n", "<C-b>", ":Break<CR>")
-  end
-})
-
 ---------------------------Set spell checking-----------------------------------
 
 vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
