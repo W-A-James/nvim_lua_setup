@@ -16,6 +16,7 @@ return require('packer').startup(function()
 
   -- Theming
   use 'sainnhe/gruvbox-material'
+  use 'EdenEast/nightfox.nvim'
 
 
   -- Autocompletion

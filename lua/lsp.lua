@@ -79,6 +79,7 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 lspconfig.clangd.setup({
+  on_attach = on_attach,
   settings = {
     cmd = "clangd"
   }
