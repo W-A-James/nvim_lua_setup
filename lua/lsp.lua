@@ -53,10 +53,10 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local servers = {
-  'ccls',
+  -- 'ccls',
   'cmake',
   'hls',
-  -- 'clangd',
+  'clangd',
   'rust_analyzer',
   'tsserver',
   'gopls',
@@ -66,16 +66,21 @@ local servers = {
   'jsonls',
   'cssls',
   'html',
-  'ltex',
   'pyright',
   'taplo'
 }
 local lspconfig = require('lspconfig')
 
-vim.cmd [[ autocmd BufRead,BufNewFile *.org set filetype=org ]]
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = {"*.org"},
+  callback = function()
+    vim.opt.filetype='org'
+  end
+})
+-- vim.cmd [[ autocmd BufRead,BufNewFile *.org set filetype=org ]]
 
 for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
+  lspconfig[lsp].setup {
     on_attach = on_attach,
     flags = {
       -- This will be the default in neovim 0.7+
@@ -85,14 +90,26 @@ for _, lsp in pairs(servers) do
   }
 end
 
+lspconfig.clangd.setup {
+  on_attach = on_attach,
+  cmd = {
+    'clangd-14'
+  },
+  flags = {
+    capabilities = capabilities,
+    debounce_text_changes = 150,
+  }
+}
+
 local rust_tools_opts = {
   tools = {
     autoSetHints = true,
-    hover_with_actions = true,
+    -- hover_with_actions = true,
     inlay_hints = {
       show_parameter_hints = true,
-      parameter_hints_prefix = "",
-      other_hints_prefix = "",
+      parameter_hints_prefix = "<-- ",
+      other_hints_prefix = "--> ",
+      highlight = "Comment"
     },
   },
   server = {
@@ -112,7 +129,7 @@ lspconfig.arduino_language_server.setup({
     "~/bin/arduino-language-server",
     "-cli-config", "~/.arduino15/arduino-cli.yaml",
     "-cli", "~/bin/arduino-cli",
-    "-clangd", "/usr/bin/clangd-12",
+    "-clangd", "/usr/bin/clangd-14",
     "-cli-daemon-addr", "localhost:50051"
   }
 })

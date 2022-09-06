@@ -1,5 +1,5 @@
 vim.cmd [[packadd packer.nvim]]
-return require('packer').startup(function() 
+return require('packer').startup(function(use) 
   use 'wbthomason/packer.nvim'
   use {'nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'}}
   -- Git integration
@@ -16,18 +16,14 @@ return require('packer').startup(function()
 
   -- Theming
   use 'sainnhe/gruvbox-material'
+  use 'projekt0n/github-nvim-theme'
 
 
   -- Autocompletion
 
   use 'neovim/nvim-lspconfig'
   use {
-    'hrsh7th/nvim-cmp', requires= {
-      {'kdheepak/cmp-latex-symbols'}
-    },
-    sources= {
-      {name='latex_symbols'}
-    }
+    'hrsh7th/nvim-cmp',
   }
 
   use 'hrsh7th/cmp-nvim-lsp'
@@ -38,10 +34,6 @@ return require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'
 
   use 'simrat39/rust-tools.nvim'
-
-  use 'lervag/vimtex'
-  use 'ziglang/zig.vim'
-
   use { 'nvim-orgmode/orgmode',
     config = function()
       require('orgmode').setup{}
