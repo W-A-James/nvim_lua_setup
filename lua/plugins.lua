@@ -8,16 +8,17 @@ return require('packer').startup(function()
   -- Lualine 
   use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt=true}}
 
-  -- Nerdtree
-  use 'preservim/nerdtree'
-  use 'Xuyuanp/nerdtree-git-plugin'
-  use 'ryanoasis/vim-devicons'
-
+  -- nvim-tree 
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = {
+      'kyazdani42/nvim-web-devicons', -- optional, for file icons
+    },
+  }
 
   -- Theming
   use 'sainnhe/gruvbox-material'
   use 'EdenEast/nightfox.nvim'
-
 
   -- Autocompletion
 
@@ -27,6 +28,8 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-cmdline'
+
+  -- luasnip
 
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip'

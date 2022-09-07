@@ -29,9 +29,14 @@ local map_cb = function(mode, keystrokes, callback)
   vim.api.nvim_set_keymap(mode, keystrokes, '', {noremap=true, silent=true, callback=callback})
 end
 
-map('n', '<Leader>b', ':NERDTreeToggle<CR>')
 map('n', '<Leader><Leader>', 'gt')
 map('n', '<leader>t', ':split term://zsh<CR>')
+
+map('n', '<leader>b', ':NvimTreeToggle<CR>')
+map('n', '<leader>B', ':NvimTreeFocus<CR>')
+map('n', '<leader>F', ':NvimTreeFindFile<CR>')
+map('n', '<Leader><CR>', ':NvimTreeRefresh<CR>')
+
 
 -- Suggestions
 map('i', '<c-s>', '<ESC>:w<CR>a')
@@ -40,7 +45,6 @@ map('n', '<c-h>', '<c-w><c-h>')
 map('n', '<c-j>', '<c-w><c-j>')
 map('n', '<c-k>', '<c-w><c-k>')
 map('n', '<c-l>', '<c-w><c-l>')
-map('n', '<Leader><CR>', ':NERDTreeRefreshRoot<CR>')
 map('n', 'Y', 'yy')
 
 map_cb('n', '<Leader>e', vim.diagnostic.open_float)

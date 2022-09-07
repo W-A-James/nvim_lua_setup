@@ -42,8 +42,6 @@ vim.g.directory='~/.swp'
 vim.g.undodir='~/.undo'
 
 
-G['NERDTreeShowHidden'] = '1'
-
 ------------------------Gruvbox material theming--------------------------------
 set.background='dark'
 G['gruvbox_material_background'] = 'hard'
@@ -80,5 +78,16 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting=false
+  }
+}
+
+---------------------------nvim-tree--------------------------------------------
+require("nvim-tree").setup {
+  view = {
+    mappings = {
+      list = {
+        { key = {'<Leader>'}}
+      }
+    }
   }
 }
