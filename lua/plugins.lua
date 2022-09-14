@@ -4,6 +4,7 @@ return require('packer').startup(function()
   use {'nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'}}
   -- Git integration
   use 'tpope/vim-fugitive'
+  use 'airblade/vim-gitgutter'
 
   -- Lualine 
   use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt=true}}

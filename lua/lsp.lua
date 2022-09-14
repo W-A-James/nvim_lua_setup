@@ -1,4 +1,13 @@
 ------------------------- Mappings ---------------------------------------------
+local map = function(mode, keystrokes, effect)
+    local opts = {noremap = true, silent=true}
+    vim.api.nvim_set_keymap(mode, keystrokes, effect, opts)
+end
+
+local map_cb = function(mode, keystrokes, callback)
+  vim.api.nvim_set_keymap(mode, keystrokes, '', {noremap=true, silent=true, callback=callback})
+end
+
 local on_attach = function(_, bufnr)
     local bmap = vim.api.nvim_buf_set_keymap
     local with_callback = function (callback)
@@ -20,14 +29,6 @@ local on_attach = function(_, bufnr)
     bmap(bufnr, 'n', '<Leader>f', '', with_callback(buf.formatting))
 end
 
-local map = function(mode, keystrokes, effect)
-    local opts = {noremap = true, silent=true}
-    vim.api.nvim_set_keymap(mode, keystrokes, effect, opts)
-end
-
-local map_cb = function(mode, keystrokes, callback)
-  vim.api.nvim_set_keymap(mode, keystrokes, '', {noremap=true, silent=true, callback=callback})
-end
 
 map('n', '<Leader><Leader>', 'gt')
 map('n', '<leader>t', ':split term://zsh<CR>')
@@ -57,7 +58,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local servers = {
-  -- 'clangd',
   'bashls',
   'jsonls',
   'pyright',
@@ -69,7 +69,7 @@ vim.cmd [[ autocmd BufRead,BufNewFile *.org set filetype=org ]]
 
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
+    on_attach = on_attach, 
     flags = {
       -- This will be the default in neovim 0.7+
       capabilities = capabilities,
@@ -83,7 +83,10 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 lspconfig.clangd.setup({
-  on_attach = on_attach,
+  on_attach = function(_, bufnr)
+      map('n','<Leader>s', ':ClangdSwitchSourceHeader<CR>')
+      on_attach(_, bufnr)
+    end,
   settings = {
     cmd = "clangd"
   }

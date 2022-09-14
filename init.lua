@@ -56,6 +56,9 @@ G.mapleader = ' '
 
 -- Lualine setup
 require('lualine').setup ({
+  options = {
+    theme = 'onelight'
+  }
 })
 
 require('lsp')
@@ -83,11 +86,7 @@ require('nvim-treesitter.configs').setup {
 
 ---------------------------nvim-tree--------------------------------------------
 require("nvim-tree").setup {
-  view = {
-    mappings = {
-      list = {
-        { key = {'<Leader>'}}
-      }
-    }
-  }
+  git = {
+    ignore = false
+  },
 }
