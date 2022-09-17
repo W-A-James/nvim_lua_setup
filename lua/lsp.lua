@@ -1,4 +1,5 @@
 ------------------------- Mappings ---------------------------------------------
+--
 local map = function(mode, keystrokes, effect)
     local opts = {noremap = true, silent=true}
     vim.api.nvim_set_keymap(mode, keystrokes, effect, opts)
@@ -59,6 +60,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local servers = {
   'bashls',
+  'tsserver',
   'jsonls',
   'pyright',
   'taplo'

@@ -1,4 +1,6 @@
 require('plugins')
+require('lsp')
+require('completion')
 
 local set = vim.opt
 local G = vim.g
@@ -61,9 +63,6 @@ require('lualine').setup ({
   }
 })
 
-require('lsp')
-require('completion')
-
 ---------------------------Set spell checking-----------------------------------
 
 vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
@@ -72,6 +71,7 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
     set.spell = true
   end
 })
+
 
 
 ---------------------------Treesitter-------------------------------------------
@@ -90,3 +90,4 @@ require("nvim-tree").setup {
     ignore = false
   },
 }
+
