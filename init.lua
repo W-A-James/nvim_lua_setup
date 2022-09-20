@@ -1,4 +1,6 @@
 require('plugins')
+require('lsp')
+require('completion')
 
 local set = vim.opt
 local G = vim.g
@@ -42,8 +44,6 @@ vim.g.directory='~/.swp'
 vim.g.undodir='~/.undo'
 
 
-G['NERDTreeShowHidden'] = '1'
-
 ------------------------Gruvbox material theming--------------------------------
 set.background='dark'
 G['gruvbox_material_background'] = 'hard'
@@ -52,46 +52,15 @@ G['gruvbox_material_enable_bold'] = '1'
 G['gruvbox_material_enable_italic'] = '1'
 G['gruvbox_material_transparent_background'] = '0'
 
-vim.cmd [[
-	colorscheme gruvbox-material
-]]
-
+vim.cmd "colorscheme nightfox"
 
 G.mapleader = ' '
 
 -- Lualine setup
 require('lualine').setup ({
   options = {
-    theme = "gruvbox-material",
-    section_separators = ' ',
-    component_separators = ' ',
+    theme = 'onelight'
   }
-})
-
-require('lsp')
-require('completion')
-
-
--- Setup ocamlformat
-vim.api.nvim_create_autocmd({"BufRead, BufNewFile"}, {
-  pattern = {"*.ml", "*.mli"},
-  callback = function()
-    vim.keymap.set('n', '<leader>f', ':!ocamlformat -i %<CR><CR>:e<CR>')
-  end
-
-
-})
-
--- Setup RustDebugger
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-  pattern = {"*.rs"},
-  callback = function()
-    G["termdebugger"] = "rust-gdb"
-    vim.keymap.set("t", "s", "is<CR><ESC>")
-    vim.keymap.set("t", "o", "io<CR><ESC>")
-    vim.keymap.set("t", "c", "ic<CR><ESC>")
-    vim.keymap.set("n", "<C-b>", ":Break<CR>")
-  end
 })
 
 ---------------------------Set spell checking-----------------------------------
@@ -104,6 +73,7 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
 })
 
 
+
 ---------------------------Treesitter-------------------------------------------
 require('nvim-treesitter.configs').setup {
   ensure_installed = "all",
@@ -113,7 +83,6 @@ require('nvim-treesitter.configs').setup {
     additional_vim_regex_highlighting=false
   }
 }
-
 
 ---------------------------nvim orgmode----------------------------------------
 require('orgmode').setup_ts_grammar()
@@ -130,3 +99,9 @@ require('orgmode').setup({
   org_default_notes_file = '~/org/refile.org'
 })
 
+---------------------------nvim-tree--------------------------------------------
+require("nvim-tree").setup {
+  git = {
+    ignore = false
+  },
+}

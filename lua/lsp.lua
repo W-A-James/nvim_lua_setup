@@ -1,4 +1,14 @@
 ------------------------- Mappings ---------------------------------------------
+--
+local map = function(mode, keystrokes, effect)
+    local opts = {noremap = true, silent=true}
+    vim.api.nvim_set_keymap(mode, keystrokes, effect, opts)
+end
+
+local map_cb = function(mode, keystrokes, callback)
+  vim.api.nvim_set_keymap(mode, keystrokes, '', {noremap=true, silent=true, callback=callback})
+end
+
 local on_attach = function(_, bufnr)
     local bmap = vim.api.nvim_buf_set_keymap
     local with_callback = function (callback)
@@ -20,18 +30,15 @@ local on_attach = function(_, bufnr)
     bmap(bufnr, 'n', '<Leader>f', '', with_callback(buf.formatting))
 end
 
-local map = function(mode, keystrokes, effect)
-    local opts = {noremap = true, silent=true}
-    vim.api.nvim_set_keymap(mode, keystrokes, effect, opts)
-end
 
-local map_cb = function(mode, keystrokes, callback)
-  vim.api.nvim_set_keymap(mode, keystrokes, '', {noremap=true, silent=true, callback=callback})
-end
-
-map('n', '<Leader>b', ':NERDTreeToggle<CR>')
 map('n', '<Leader><Leader>', 'gt')
 map('n', '<leader>t', ':split term://zsh<CR>')
+
+map('n', '<leader>b', ':NvimTreeToggle<CR>')
+map('n', '<leader>B', ':NvimTreeFocus<CR>')
+map('n', '<leader>F', ':NvimTreeFindFile<CR>')
+map('n', '<Leader><CR>', ':NvimTreeRefresh<CR>')
+
 
 -- Suggestions
 map('i', '<c-s>', '<ESC>:w<CR>a')
@@ -40,7 +47,6 @@ map('n', '<c-h>', '<c-w><c-h>')
 map('n', '<c-j>', '<c-w><c-j>')
 map('n', '<c-k>', '<c-w><c-k>')
 map('n', '<c-l>', '<c-w><c-l>')
-map('n', '<Leader><CR>', ':NERDTreeRefreshRoot<CR>')
 map('n', 'Y', 'yy')
 
 map_cb('n', '<Leader>e', vim.diagnostic.open_float)
@@ -63,6 +69,7 @@ local servers = {
   'ocamllsp',
   'zls',
   'bashls',
+  'tsserver',
   'jsonls',
   'cssls',
   'html',
@@ -134,10 +141,19 @@ lspconfig.arduino_language_server.setup({
   }
 })
 
-
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
+
+lspconfig.clangd.setup({
+  on_attach = function(_, bufnr)
+      map('n','<Leader>s', ':ClangdSwitchSourceHeader<CR>')
+      on_attach(_, bufnr)
+    end,
+  settings = {
+    cmd = "clangd"
+  }
+})
 
 lspconfig.sumneko_lua.setup({
    settings = {
