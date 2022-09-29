@@ -1,5 +1,4 @@
 ------------------------- Mappings ---------------------------------------------
---
 local map = function(mode, keystrokes, effect)
     local opts = {noremap = true, silent=true}
     vim.api.nvim_set_keymap(mode, keystrokes, effect, opts)
@@ -41,12 +40,15 @@ map('n', '<Leader><CR>', ':NvimTreeRefresh<CR>')
 
 
 -- Suggestions
+-- Save with ctrl+s
 map('i', '<c-s>', '<ESC>:w<CR>a')
 map('n', '<c-s>', ':w<CR>')
+-- move between panes
 map('n', '<c-h>', '<c-w><c-h>')
 map('n', '<c-j>', '<c-w><c-j>')
 map('n', '<c-k>', '<c-w><c-k>')
 map('n', '<c-l>', '<c-w><c-l>')
+-- Copy line
 map('n', 'Y', 'yy')
 
 map_cb('n', '<Leader>e', vim.diagnostic.open_float)
@@ -63,17 +65,16 @@ local servers = {
   'tsserver',
   'jsonls',
   'pyright',
-  'taplo'
+  'taplo',
 }
 local lspconfig = require('lspconfig')
 
 vim.cmd [[ autocmd BufRead,BufNewFile *.org set filetype=org ]]
 
 for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach, 
+  lspconfig[lsp].setup {
+    on_attach = on_attach,
     flags = {
-      -- This will be the default in neovim 0.7+
       capabilities = capabilities,
       debounce_text_changes = 150,
     }
@@ -85,12 +86,15 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 lspconfig.clangd.setup({
-  on_attach = function(_, bufnr)
+  on_attach = function(a, bufnr)
       map('n','<Leader>s', ':ClangdSwitchSourceHeader<CR>')
-      on_attach(_, bufnr)
+      on_attach(a, bufnr)
     end,
   settings = {
-    cmd = "clangd"
+    cmd = "clangd",
+    inlayhints = {
+      enabled = true,
+    }
   }
 })
 
@@ -118,6 +122,29 @@ lspconfig.sumneko_lua.setup({
     },
   },
 })
+
+local rust_tools_opts = {
+  tools = {
+    autoSetHints = true,
+    -- hover_with_actions = true,
+    inlay_hints = {
+      show_parameter_hints = true,
+      parameter_hints_prefix = "<-- ",
+      other_hints_prefix = "--> ",
+      highlight = "Comment"
+    },
+  },
+  server = {
+    on_attach = on_attach,
+    ["rust-analyzer"] = {
+      checkOnSave = {
+        command = "clippy"
+      }
+    }
+  }
+}
+
+require('rust-tools').setup(rust_tools_opts)
 
 -- Enable floating window
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

@@ -1,7 +1,3 @@
-require('plugins')
-require('lsp')
-require('completion')
-
 local set = vim.opt
 local G = vim.g
 
@@ -26,7 +22,7 @@ set.foldlevel=40
 
 set.number = true
 set.mouse = 'a'
-set.colorcolumn = '80'
+set.colorcolumn = '100'
 set.cursorline = true
 set.encoding = 'utf-8'
 set.splitbelow = true
@@ -34,7 +30,7 @@ set.splitright = true
 set.termguicolors = true
 
 -------------------------Backup locations---------------------------------------
---
+
 set.backupdir='.backup/.~/.backup,/tmp//'
 set.backupdir='.swp/.~/.swp/,/tmp//'
 set.undodir='.undo/.~/.undo/./tmp//'
@@ -42,7 +38,11 @@ set.undodir='.undo/.~/.undo/./tmp//'
 vim.g.backupdir='~/.backup'
 vim.g.directory='~/.swp'
 vim.g.undodir='~/.undo'
+-------------------------------------------------------------------------------
 
+require('plugins')
+require('lsp')
+require('completion')
 
 ------------------------Gruvbox material theming--------------------------------
 set.background='dark'
@@ -56,12 +56,12 @@ vim.cmd "colorscheme nightfox"
 
 G.mapleader = ' '
 
--- Lualine setup
-require('lualine').setup ({
-  options = {
-    theme = 'onelight'
-  }
+-------------------------NVIM web dev icons-------------------------------------
+require('nvim-web-devicons').setup({
+  default = true
 })
+-- Lualine setup
+require('lualine').setup({})
 
 ---------------------------Set spell checking-----------------------------------
 
@@ -71,8 +71,6 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
     set.spell = true
   end
 })
-
-
 
 ---------------------------Treesitter-------------------------------------------
 require('nvim-treesitter.configs').setup {
@@ -90,4 +88,3 @@ require("nvim-tree").setup {
     ignore = false
   },
 }
-

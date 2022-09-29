@@ -6,6 +6,7 @@ return require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
   use 'airblade/vim-gitgutter'
 
+  use 'kyazdani42/nvim-web-devicons'
   -- Lualine 
   use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt=true}}
 
@@ -30,7 +31,10 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-cmdline'
 
+  -- Rust
+  use 'simrat39/rust-tools.nvim'
+
   -- luasnip
-  use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
 end)
