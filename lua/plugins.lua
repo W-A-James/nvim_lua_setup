@@ -10,6 +10,7 @@ return require('packer').startup(function(use)
   use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt=true}}
 
   -- nvim-tree 
+  use 'kyazdani42/nvim-web-devicons'
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
@@ -21,6 +22,7 @@ return require('packer').startup(function(use)
   use 'sainnhe/gruvbox-material'
   use 'projekt0n/github-nvim-theme'
   use 'EdenEast/nightfox.nvim'
+  use 'dracula/vim'
 
   -- Autocompletion and LSP integration
 

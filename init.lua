@@ -1,7 +1,3 @@
-require('plugins')
-require('lsp')
-require('completion')
-
 local set = vim.opt
 local G = vim.g
 
@@ -32,9 +28,10 @@ set.encoding = 'utf-8'
 set.splitbelow = true
 set.splitright = true
 set.termguicolors = true
+set.laststatus = 3
 
+G.mapleader = ' '
 -------------------------Backup locations---------------------------------------
---
 set.backupdir='.backup/.~/.backup,/tmp//'
 set.backupdir='.swp/.~/.swp/,/tmp//'
 set.undodir='.undo/.~/.undo/./tmp//'
@@ -43,7 +40,10 @@ vim.g.backupdir='~/.backup'
 vim.g.directory='~/.swp'
 vim.g.undodir='~/.undo'
 
-
+------------------------Load plugins--------------------------------------------
+require('plugins')
+require('lsp')
+require('completion')
 ------------------------Gruvbox material theming--------------------------------
 set.background='dark'
 G['gruvbox_material_background'] = 'hard'
@@ -54,13 +54,9 @@ G['gruvbox_material_transparent_background'] = '0'
 
 vim.cmd "colorscheme nightfox"
 
-G.mapleader = ' '
 
 -- Lualine setup
 require('lualine').setup ({
-  options = {
-    theme = 'onelight'
-  }
 })
 
 ---------------------------Set spell checking-----------------------------------

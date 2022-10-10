@@ -28,11 +28,11 @@ local on_attach = function(_, bufnr)
     bmap(bufnr, 'n', '<Leader>ca', '', with_callback(buf.code_action))
     bmap(bufnr, 'n', 'gr', '', with_callback(buf.references))
     bmap(bufnr, 'n', '<Leader>f', '', with_callback(buf.formatting))
+    bmap(bufnr, 'n', '<Leader>e', '', with_callback(vim.diagnostic.open_float))
+    bmap(bufnr, 'n', '[d', '', with_callback(vim.diagnostic.goto_prev))
+    bmap(bufnr, 'n', ']d', '', with_callback(vim.diagnostic.goto_next))
+    bmap(bufnr, 'n', '<Leader>q', '', with_callback(vim.diagnostic.setloclist))
 end
-
-
-map('n', '<Leader><Leader>', 'gt')
-map('n', '<leader>t', ':split term://zsh<CR>')
 
 map('n', '<leader>b', ':NvimTreeToggle<CR>')
 map('n', '<leader>B', ':NvimTreeFocus<CR>')
@@ -49,20 +49,13 @@ map('n', '<c-k>', '<c-w><c-k>')
 map('n', '<c-l>', '<c-w><c-l>')
 map('n', 'Y', 'yy')
 
-map_cb('n', '<Leader>e', vim.diagnostic.open_float)
-map_cb('n', '[d', vim.diagnostic.goto_prev)
-map_cb('n', ']d', vim.diagnostic.goto_next)
-map_cb('n', '<Leader>q', vim.diagnostic.setloclist)
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local servers = {
-  -- 'ccls',
   'cmake',
   'hls',
-  'clangd',
   'rust_analyzer',
   'tsserver',
   'gopls',
@@ -73,7 +66,7 @@ local servers = {
   'jsonls',
   'cssls',
   'html',
-  'pyright',
+  'pylsp',
   'taplo'
 }
 local lspconfig = require('lspconfig')
@@ -84,7 +77,6 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
     vim.opt.filetype='org'
   end
 })
--- vim.cmd [[ autocmd BufRead,BufNewFile *.org set filetype=org ]]
 
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
@@ -96,17 +88,6 @@ for _, lsp in pairs(servers) do
     }
   }
 end
-
-lspconfig.clangd.setup {
-  on_attach = on_attach,
-  cmd = {
-    'clangd-14'
-  },
-  flags = {
-    capabilities = capabilities,
-    debounce_text_changes = 150,
-  }
-}
 
 local rust_tools_opts = {
   tools = {
@@ -151,7 +132,7 @@ lspconfig.clangd.setup({
       on_attach(_, bufnr)
     end,
   settings = {
-    cmd = "clangd"
+    cmd = "clangd-14"
   }
 })
 
@@ -178,6 +159,22 @@ lspconfig.sumneko_lua.setup({
       },
     },
   },
+})
+
+lspconfig.pylsp.setup({
+  pylsp = {
+    plugins = {
+      flake8 = {
+        enabled = true
+      },
+      autopep8 = {
+        enabled = false
+      },
+      jedi_completion = {
+        fuzzy = true
+      }
+    }
+  }
 })
 
 -- Enable floating window
