@@ -1,12 +1,112 @@
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+vim.opt.paste = false
+-- nvim-cmp setup
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+local cmp = require('cmp')
+local luasnip = require('luasnip')
+local select_opts = {behavior = cmp.SelectBehavior.Insert}
+
+cmp.setup ({
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  completion = { completeopt = 'menu,menuone,noinsert' },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(select_opts)),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(select_opts)),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm ({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    }),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.mapping.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, {'i', c=cmp.config.disable, 's'}),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.mapping.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {'i', c=cmp.config.disable, 's'}),
+  }),
+  sources = cmp.config.sources ({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'path'},
+    { name = 'buffer'},
+  },{
+    {name = 'buffer'},
+  })
+})
+
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(), -- important!
+  sources = {
+    { name = 'nvim_lua' },
+    { name = 'cmdline' },
+  },
+})
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(), -- important!
+  sources = {
+    { name = 'buffer' },
+  },
+})
+
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 ------------------------- Mappings ---------------------------------------------
 local map = function(mode, keystrokes, effect)
-    local opts = {noremap = true, silent=true}
+    local opts = {noremap = true, silent=false}
     vim.api.nvim_set_keymap(mode, keystrokes, effect, opts)
 end
 
 local map_cb = function(mode, keystrokes, callback)
   vim.api.nvim_set_keymap(mode, keystrokes, '', {noremap=true, silent=true, callback=callback})
 end
+
+-- Suggestions
+map('n', '<Leader><Leader>', 'gt')
+
+map('n', '<Leader>b', ':NvimTreeToggle<CR>')
+map('n', '<Leader>B', ':NvimTreeFocus<CR>')
+map('n', '<Leader>F', ':NvimTreeFindFile<CR>')
+map('n', '<Leader><CR>', ':NvimTreeRefresh<CR>')
+-- Save with ctrl+s
+map('i', '<c-s>', '<ESC>:w<CR>a')
+map('n', '<c-s>', ':w<CR>')
+-- move between panes
+map('n', '<c-h>', '<c-w><c-h>')
+map('n', '<c-j>', '<c-w><c-j>')
+map('n', '<c-k>', '<c-w><c-k>')
+map('n', '<c-l>', '<c-w><c-l>')
+-- Copy line
+map('n', 'Y', 'yy')
+
+map_cb('n', '<Leader>e', vim.diagnostic.open_float)
+map_cb('n', '[d', vim.diagnostic.goto_prev)
+map_cb('n', ']d', vim.diagnostic.goto_next)
+map_cb('n', '<Leader>q', vim.diagnostic.setloclist)
 
 local on_attach = function(_, bufnr)
     local bmap = vim.api.nvim_buf_set_keymap
@@ -29,37 +129,6 @@ local on_attach = function(_, bufnr)
     bmap(bufnr, 'n', '<Leader>f', '', with_callback(buf.formatting))
 end
 
-
-map('n', '<Leader><Leader>', 'gt')
-map('n', '<leader>t', ':split term://zsh<CR>')
-
-map('n', '<leader>b', ':NvimTreeToggle<CR>')
-map('n', '<leader>B', ':NvimTreeFocus<CR>')
-map('n', '<leader>F', ':NvimTreeFindFile<CR>')
-map('n', '<Leader><CR>', ':NvimTreeRefresh<CR>')
-
-
--- Suggestions
--- Save with ctrl+s
-map('i', '<c-s>', '<ESC>:w<CR>a')
-map('n', '<c-s>', ':w<CR>')
--- move between panes
-map('n', '<c-h>', '<c-w><c-h>')
-map('n', '<c-j>', '<c-w><c-j>')
-map('n', '<c-k>', '<c-w><c-k>')
-map('n', '<c-l>', '<c-w><c-l>')
--- Copy line
-map('n', 'Y', 'yy')
-
-map_cb('n', '<Leader>e', vim.diagnostic.open_float)
-map_cb('n', '[d', vim.diagnostic.goto_prev)
-map_cb('n', ']d', vim.diagnostic.goto_next)
-map_cb('n', '<Leader>q', vim.diagnostic.setloclist)
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
 local servers = {
   'bashls',
   'tsserver',
@@ -67,12 +136,14 @@ local servers = {
   'pyright',
   'taplo',
 }
-local lspconfig = require('lspconfig')
+-- local lspconfig = require('lspconfig')
 
-vim.cmd [[ autocmd BufRead,BufNewFile *.org set filetype=org ]]
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
 
 for _, lsp in pairs(servers) do
-  lspconfig[lsp].setup {
+  require('lspconfig')[lsp].setup {
     on_attach = on_attach,
     flags = {
       capabilities = capabilities,
@@ -81,11 +152,8 @@ for _, lsp in pairs(servers) do
   }
 end
 
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
 
-lspconfig.clangd.setup({
+require('lspconfig').clangd.setup({
   on_attach = function(a, bufnr)
       map('n','<Leader>s', ':ClangdSwitchSourceHeader<CR>')
       on_attach(a, bufnr)
@@ -95,10 +163,13 @@ lspconfig.clangd.setup({
     inlayhints = {
       enabled = true,
     }
+  },
+  flags = {
+    capabilities = capabilities
   }
 })
 
-lspconfig.sumneko_lua.setup({
+require('lspconfig').sumneko_lua.setup({
    settings = {
     Lua = {
       runtime = {
@@ -121,6 +192,9 @@ lspconfig.sumneko_lua.setup({
       },
     },
   },
+  flags = {
+    capabilities = capabilities
+  }
 })
 
 local rust_tools_opts = {
@@ -141,7 +215,7 @@ local rust_tools_opts = {
         command = "clippy"
       }
     }
-  }
+  },
 }
 
 require('rust-tools').setup(rust_tools_opts)
