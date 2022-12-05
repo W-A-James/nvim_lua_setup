@@ -9,7 +9,7 @@ return require('packer').startup(function(use)
   -- Lualine 
   use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt=true}}
 
-  -- nvim-tree 
+  -- nvim-tree
   use 'kyazdani42/nvim-web-devicons'
   use {
     'kyazdani42/nvim-tree.lua',
@@ -17,6 +17,9 @@ return require('packer').startup(function(use)
       'kyazdani42/nvim-web-devicons', -- optional, for file icons
     },
   }
+
+  -- conjure
+  use 'Olical/conjure'
 
   -- Theming
   use 'sainnhe/gruvbox-material'

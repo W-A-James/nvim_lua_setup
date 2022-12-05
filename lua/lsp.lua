@@ -55,6 +55,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local servers = {
   'cmake',
+  'clojure_lsp',
   'hls',
   'rust_analyzer',
   'tsserver',
