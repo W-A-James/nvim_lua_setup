@@ -49,6 +49,13 @@ map('n', '<c-k>', '<c-w><c-k>')
 map('n', '<c-l>', '<c-w><c-l>')
 map('n', 'Y', 'yy')
 
+-- telescope
+local telescopeBuiltin = require('telescope.builtin')
+map_cb('n', '<leader>FF', telescopeBuiltin.find_files)
+map_cb('n', '<leader>FG', telescopeBuiltin.live_grep)
+map_cb('n', '<leader>FB', telescopeBuiltin.buffers)
+map_cb('n', '<leader>FH', telescopeBuiltin.help_tags)
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
