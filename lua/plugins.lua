@@ -18,9 +18,6 @@ return require('packer').startup(function(use)
     },
   }
 
-  -- conjure
-  use 'Olical/conjure'
-
   -- Theming
   use 'sainnhe/gruvbox-material'
   use 'projekt0n/github-nvim-theme'
@@ -41,11 +38,7 @@ return require('packer').startup(function(use)
   use 'L3MON4D3/LuaSnip'
 
   use 'simrat39/rust-tools.nvim'
-  use { 'nvim-orgmode/orgmode',
-    config = function()
-      require('orgmode').setup{}
-    end
-  }
+
   use {
   'nvim-telescope/telescope.nvim', tag = '0.1.0',
   requires = { {'nvim-lua/plenary.nvim'} }
