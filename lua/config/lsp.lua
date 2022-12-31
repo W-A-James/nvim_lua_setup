@@ -2,23 +2,40 @@ local utils = require('config.utils')
 local M = {}
 
 function M.setup()
-  local on_attach = function(_, bufnr)
-      -- set up mappings
-      local mappings = require('config.keymap').LSP_MAPPINGS
-      for _, mapping in ipairs(mappings)
-      do
-        mode, keystrokes, cb = mapping[1], mapping[2], mapping[3]
-        utils.buffer_map_with_cb(mode, keystrokes, '', cb)
-      end
+  local on_attach = function(_, bufferNumber)
+    print("CALLING on_attach")
+    local mappings = { -- mode, keystrokes, callback
+      {'n', 'gD', vim.lsp.buf.declaration},
+      {'n', 'gd', vim.lsp.buf.definition},
+      {'n', 'K', vim.lsp.buf.hover},
+      {'n', 'gi', vim.lsp.buf.implementation},
+      {'n', '<C-K>', vim.lsp.buf.signature_help},
+      {'n', '<Leader wa>', vim.lsp.buf.add_workspace_folder},
+      {'n', '<Leader wr>', vim.lsp.buf.remove_workspace_folder},
+      {'n', '<Leader wl>', vim.lsp.buf.list_workspace_folders},
+      {'n', '<Leader D>', vim.lsp.buf.type_definition},
+      {'n', '<Leader rn>', vim.lsp.buf.rename},
+      {'n', '<Leader ca>', vim.lsp.buf.code_action},
+      {'n', 'gr', vim.lsp.buf.references},
+      {'n', '<Leader f>', function() print("HELLO") vim.lsp.buf.format() end},
+      {'n', '<Leader e>', vim.diagnostic.open_float},
+      {'n', '[d',vim.diagnostic.goto_prev},
+      {'n', ']d',vim.diagnostic.goto_next},
+      {'n', '<Leader>q', vim.diagnostic.setloclist},
+    }
+    for _, mapping in ipairs(mappings) do
+      local mode, keystrokes, cb = mapping[1], mapping[2], mapping[3]
+      utils.buffer_map_with_cb(bufferNumber, mode, keystrokes, cb)
+    end
+    print("CALLED on_attach")
   end
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
   local servers = {
     'cmake',
-    'clojure_lsp',
     'hls',
     'rust_analyzer',
     'tsserver',
@@ -30,7 +47,6 @@ function M.setup()
     'jsonls',
     'cssls',
     'html',
-    'pylsp',
     'taplo'
   }
   local lspconfig = require('lspconfig')
@@ -69,6 +85,7 @@ function M.setup()
   require('rust-tools').setup(rust_tools_opts)
 
   lspconfig.arduino_language_server.setup({
+    on_attach = on_attach,
     cmd = {
       "~/bin/arduino-language-server",
       "-cli-config", "~/.arduino15/arduino-cli.yaml",
@@ -93,6 +110,7 @@ function M.setup()
   })
 
   lspconfig.sumneko_lua.setup({
+     on_attach = on_attach,
      settings = {
       Lua = {
         runtime = {
@@ -118,6 +136,7 @@ function M.setup()
   })
 
   lspconfig.pylsp.setup({
+    on_attach = on_attach,
     pylsp = {
       plugins = {
         flake8 = {
@@ -144,4 +163,5 @@ function M.setup()
     }
   )
 end
+
 return M

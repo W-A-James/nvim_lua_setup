@@ -13,7 +13,7 @@ function M.map_with_cb(mode, keystrokes, callback)
   vim.api.nvim_set_keymap(mode, keystrokes, '', opts)
 end
 
-function M.buffer_map_with_cb(mode, keystrokes, bufferNumber, callback)
+function M.buffer_map_with_cb(bufferNumber, mode, keystrokes, callback)
   local opts = {silent = true, noremap = true, callback = callback}
   vim.api.nvim_buf_set_keymap(bufferNumber, mode, keystrokes, '', opts)
 end
