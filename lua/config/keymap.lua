@@ -1,29 +1,57 @@
 local utils = require("config.utils")
 local G = utils.G
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 
 local M = {
   LSP_MAPPINGS = { -- mode, keystrokes, callback
-    {'n', 'gD', vim.lsp.buf.declaration},
-    {'n', 'gd', vim.lsp.buf.definition},
-    {'n', 'K', vim.lsp.buf.hover},
-    {'n', 'gi', vim.lsp.buf.implementation},
-    {'n', '<C-K>', vim.lsp.buf.signature_help},
-    {'n', '<Leader wa>', vim.lsp.buf.add_workspace_folder},
-    {'n', '<Leader wr>', vim.lsp.buf.remove_workspace_folder},
-    {'n', '<Leader wl>', vim.lsp.buf.list_workspace_folders},
-    {'n', '<Leader D>', vim.lsp.buf.type_definition},
-    {'n', '<Leader rn>', vim.lsp.buf.rename},
-    {'n', '<Leader ca>', vim.lsp.buf.code_action},
-    {'n', 'gr', vim.lsp.buf.references},
-    {'n', '<Leader f>', function()
-      print("HELLO")
-      vim.lsp.buf.format()
-    end},
-    {'n', '<Leader e>', vim.diagnostic.open_float},
-    {'n', '[d',vim.diagnostic.goto_prev},
-    {'n', ']d',vim.diagnostic.goto_next},
-    {'n', '<Leader>q', vim.diagnostic.setloclist},
-  },
+      {'n', 'gD', vim.lsp.buf.declaration},
+      {'n', 'gd', vim.lsp.buf.definition},
+      {'n', 'K', vim.lsp.buf.hover},
+      {'n', 'gi', vim.lsp.buf.implementation},
+      {'n', '<C-K>', vim.lsp.buf.signature_help},
+      {'n', '<leader>wa', vim.lsp.buf.add_workspace_folder},
+      {'n', '<leader>wr', vim.lsp.buf.remove_workspace_folder},
+      {'n', '<leader>wl', vim.lsp.buf.list_workspace_folders},
+      {'n', '<leader>D', vim.lsp.buf.type_definition},
+      {'n', '<leader>rn', vim.lsp.buf.rename},
+      {'n', '<leader>ca', vim.lsp.buf.code_action},
+      {'n', 'gr', vim.lsp.buf.references},
+      {'n', '<leader>f', function() vim.lsp.buf.format{async=true} end},
+      {'n', '<leader>e', vim.diagnostic.open_float},
+      {'n', '[d',vim.diagnostic.goto_prev},
+      {'n', ']d',vim.diagnostic.goto_next},
+      {'n', '<leader>q', vim.diagnostic.setloclist},
+    },
+  CMP_MAPPINGS = {
+      ['<C-p>'] = cmp.mapping.select_prev_item(),
+      ['<C-n>'] = cmp.mapping.select_next_item(),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete({}),
+      ['<CR>'] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      ['<Tab>'] = function(fallback)
+        if cmp.visible() then
+          cmp.mapping.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        else
+          fallback()
+        end
+      end,
+      ['<S-Tab>'] = function(fallback)
+        if cmp.visible() then
+          cmp.mapping.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end,
+    },
   MAP_LEADER = ' '
 }
 

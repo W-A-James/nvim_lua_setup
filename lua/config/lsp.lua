@@ -3,31 +3,7 @@ local M = {}
 
 function M.setup()
   local on_attach = function(_, bufferNumber)
-    print("CALLING on_attach")
-    local mappings = { -- mode, keystrokes, callback
-      {'n', 'gD', vim.lsp.buf.declaration},
-      {'n', 'gd', vim.lsp.buf.definition},
-      {'n', 'K', vim.lsp.buf.hover},
-      {'n', 'gi', vim.lsp.buf.implementation},
-      {'n', '<C-K>', vim.lsp.buf.signature_help},
-      {'n', '<Leader wa>', vim.lsp.buf.add_workspace_folder},
-      {'n', '<Leader wr>', vim.lsp.buf.remove_workspace_folder},
-      {'n', '<Leader wl>', vim.lsp.buf.list_workspace_folders},
-      {'n', '<Leader D>', vim.lsp.buf.type_definition},
-      {'n', '<Leader rn>', vim.lsp.buf.rename},
-      {'n', '<Leader ca>', vim.lsp.buf.code_action},
-      {'n', 'gr', vim.lsp.buf.references},
-      {'n', '<Leader f>', function() print("HELLO") vim.lsp.buf.format() end},
-      {'n', '<Leader e>', vim.diagnostic.open_float},
-      {'n', '[d',vim.diagnostic.goto_prev},
-      {'n', ']d',vim.diagnostic.goto_next},
-      {'n', '<Leader>q', vim.diagnostic.setloclist},
-    }
-    for _, mapping in ipairs(mappings) do
-      local mode, keystrokes, cb = mapping[1], mapping[2], mapping[3]
-      utils.buffer_map_with_cb(bufferNumber, mode, keystrokes, cb)
-    end
-    print("CALLED on_attach")
+    require('config.keymap').setLSPKeymaps(bufferNumber)
   end
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -113,6 +89,9 @@ function M.setup()
      on_attach = on_attach,
      settings = {
       Lua = {
+        format = {
+          enable = true,
+        },
         runtime = {
           -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = 'LuaJIT',
