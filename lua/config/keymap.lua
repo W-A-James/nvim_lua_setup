@@ -22,7 +22,7 @@ local M = {
       {'n', '[d',vim.diagnostic.goto_prev},
       {'n', ']d',vim.diagnostic.goto_next},
       {'n', '<leader>q', vim.diagnostic.setloclist},
-    },
+  },
   CMP_MAPPINGS = {
       ['<C-p>'] = cmp.mapping.select_prev_item(),
       ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -51,7 +51,10 @@ local M = {
           fallback()
         end
       end,
-    },
+  },
+  DAP_MAPPINGS = {
+    {},
+  },
   MAP_LEADER = ' '
 }
 
