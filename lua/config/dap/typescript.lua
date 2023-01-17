@@ -9,6 +9,13 @@ function M.setup()
     args = {os.getenv('HOME') .. '/dev/tools/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
   }
 
+  local function get_mocha_pid()
+    local output = io.popen("ps ah | rg -e 'npm exec mocha.*inspect-brk' | head -1 | awk -F ' ' '{ print $1 }'")
+    local pid = output:read("*a")
+    output:close()
+    return pid
+  end
+
   dap.configurations.typescript= {
     {
       name = 'Launch',
@@ -25,6 +32,12 @@ function M.setup()
       type = 'node2',
       request = 'attach',
       processId = dap_utils.pick_process
+    },
+    {
+      name = 'Attach to mocha',
+      type = 'node2',
+      request = 'attach',
+      processId = get_mocha_pid
     }
   }
 end
