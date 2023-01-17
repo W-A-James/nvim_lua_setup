@@ -1,6 +1,7 @@
 local utils = require("config.utils")
 local G = utils.G
 local cmp = require('cmp')
+local dap = require('dap')
 local luasnip = require('luasnip')
 
 local M = {
@@ -53,7 +54,14 @@ local M = {
       end,
   },
   DAP_MAPPINGS = {
-    {},
+    {'n', '<F5>', dap.continue},
+    {'n', '<F10>', dap.step_over},
+    {'n', '<F11>', dap.step_into},
+    {'n', '<F12>', dap.step_out},
+    {'n', '<C-b>', dap.toggle_breakpoint},
+    {'n', '<C-l>', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))end},
+    {'n', '<Leader>dr', dap.repl.toggle},
+    {'n', '<Leader>dl', dap.repl.run_last},
   },
   MAP_LEADER = ' '
 }

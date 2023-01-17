@@ -12,6 +12,8 @@ local M = {
 
     require('config.nvim-tree').setup()
     require('config.treesitter').setup()
+
+    require('config.dap').setup()
   end
 }
 

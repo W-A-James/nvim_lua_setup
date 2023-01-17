@@ -8,7 +8,7 @@ function M.setup()
     args = {'--hackage-version=0.0.33.0'},
   }
 
-  dap.configuration.haskell = {
+  dap.configurations.haskell = {
     {
       type = 'haskell',
       request = 'launch',
