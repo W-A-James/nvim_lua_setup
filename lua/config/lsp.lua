@@ -11,19 +11,12 @@ function M.setup()
   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
   local servers = {
-    'cmake',
-    'hls',
-    'rust_analyzer',
     'tsserver',
-    'gopls',
-    'ocamllsp',
-    'zls',
     'bashls',
     'tsserver',
     'jsonls',
     'cssls',
     'html',
-    'taplo'
   }
   local lspconfig = require('lspconfig')
 
@@ -36,40 +29,6 @@ function M.setup()
       }
     }
   end
-
-  local rust_tools_opts = {
-    tools = {
-      autoSetHints = true,
-      -- hover_with_actions = true,
-      inlay_hints = {
-        show_parameter_hints = true,
-        parameter_hints_prefix = "<-- ",
-        other_hints_prefix = "--> ",
-        highlight = "Comment"
-      },
-    },
-    server = {
-      on_attach = on_attach,
-      ["rust-analyzer"] = {
-        checkOnSave = {
-          command = "clippy"
-        }
-      }
-    }
-  }
-
-  require('rust-tools').setup(rust_tools_opts)
-
-  lspconfig.arduino_language_server.setup({
-    on_attach = on_attach,
-    cmd = {
-      "~/bin/arduino-language-server",
-      "-cli-config", "~/.arduino15/arduino-cli.yaml",
-      "-cli", "~/bin/arduino-cli",
-      "-clangd", "/usr/bin/clangd-14",
-      "-cli-daemon-addr", "localhost:50051"
-    }
-  })
 
   local runtime_path = vim.split(package.path, ';')
   table.insert(runtime_path, "lua/?.lua")
@@ -112,23 +71,6 @@ function M.setup()
         },
       },
     },
-  })
-
-  lspconfig.pylsp.setup({
-    on_attach = on_attach,
-    pylsp = {
-      plugins = {
-        flake8 = {
-          enabled = true
-        },
-        autopep8 = {
-          enabled = false
-        },
-        jedi_completion = {
-          fuzzy = true
-        }
-      }
-    }
   })
 
   -- Enable floating window
