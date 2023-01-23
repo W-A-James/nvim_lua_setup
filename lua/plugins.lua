@@ -1,13 +1,17 @@
 vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-  use {'nvim-treesitter/nvim-treesitter', tag = 'v0.8.0', {run = ':TSUpdate'}}
+  use { 'nvim-treesitter/nvim-treesitter', tag = 'v0.8.0', { run = ':TSUpdate' } }
+  -- Orgmode
+  use { 'nvim-orgmode/orgmode', config = function()
+    require('orgmode').setup {}
+  end }
   -- Git integration
   use 'tpope/vim-fugitive'
   use 'airblade/vim-gitgutter'
 
-  -- Lualine 
-  use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt=true}}
+  -- Lualine
+  use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
 
   -- nvim-tree
   use 'kyazdani42/nvim-web-devicons'
@@ -39,7 +43,7 @@ return require('packer').startup(function(use)
 
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
   use 'mfussenegger/nvim-dap'
