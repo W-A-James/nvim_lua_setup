@@ -1,5 +1,5 @@
 local lspconfig = require('lspconfig')
-local M
+local M = {}
 
 function M.setup(flags, on_attach)
   lspconfig.arduino_language_server.setup({
