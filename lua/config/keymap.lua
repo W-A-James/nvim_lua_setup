@@ -93,6 +93,9 @@ function M.setup ()
   -- Copy entire line
   utils.map('n', 'Y', 'yy')
 
+  -- Copy file to clipboard
+  utils.map('n', 'C', ':!cat % | clip.exe<CR><CR>:echo "Copied" @% "to clipboard"<CR>')
+
   -- telescope
   local telescopeBuiltin = require('telescope.builtin')
   utils.map_with_cb('n', '<leader>FF', telescopeBuiltin.find_files)

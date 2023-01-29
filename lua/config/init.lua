@@ -14,6 +14,8 @@ local M = {
     require('config.treesitter').setup()
 
     require('config.dap').setup()
+
+    require('config.orgmode').setup()
   end
 }
 
