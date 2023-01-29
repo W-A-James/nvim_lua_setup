@@ -77,17 +77,17 @@ function M.setup()
 
   lspconfig.clangd.setup({
     on_attach = function(_, bufnr)
-        utils.map('n','<Leader>s', ':ClangdSwitchSourceHeader<CR>')
-        on_attach(_, bufnr)
-      end,
+      utils.map('n', '<Leader>s', ':ClangdSwitchSourceHeader<CR>')
+      on_attach(_, bufnr)
+    end,
     settings = {
       cmd = "clangd-14"
     }
   })
 
   lspconfig.sumneko_lua.setup({
-     on_attach = on_attach,
-     settings = {
+    on_attach = on_attach,
+    settings = {
       Lua = {
         format = {
           enable = true,
@@ -100,7 +100,7 @@ function M.setup()
         },
         diagnostics = {
           -- Get the language server to recognize the `vim` global
-          globals = {'vim'},
+          globals = { 'vim' },
         },
         workspace = {
           -- Make the server aware of Neovim runtime files
