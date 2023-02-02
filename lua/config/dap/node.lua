@@ -1,32 +1,67 @@
 local dap = require('dap')
 local dap_utils = require('dap.utils')
+local dap_vscode_js = require('dap-vscode-js')
 local M = {}
 
 function M.setup()
-  dap.adapters.node2= {
+  dap_vscode_js.setup({
+    adapters = {'pwa-node', 'node-terminal'}
+  })
+
+  dap.adapters.node2 = {
     type = 'executable',
     command = 'node',
-    args = {os.getenv('HOME') .. '/tools/vscode-node-debug2/out/src/nodeDebug.js'},
+    args = { os.getenv('HOME') .. '/tools/vscode-node-debug2/out/src/nodeDebug.js' },
   }
 
-  dap.configurations.javascript= {
+  local function get_mocha_pid()
+    local output = io.popen("ps ah | rg -e 'npm exec mocha.*inspect-brk' | head -1 | awk -F ' ' '{ print $1 }'")
+    local pid
+    if output ~= nil then
+      pid = output:read("*a")
+      output:close()
+      return pid
+    else
+      return -1
+    end
+  end
+
+  dap.configurations.typescript = {
     {
       name = 'Launch',
-      type = 'node2',
+      type = 'pwa-node',
       request = 'launch',
+      runtimeExecutable = 'npx',
+      runtimeArgs = {'mocha -n inspect-brk'},
       program = '${file}',
       cwd = vim.fn.getcwd(),
       protocol = 'inspector',
       sourceMaps = true,
-      console = 'integratedTerminal'
+      console = 'integratedTerminal',
+      internalConsoleOptions = 'neverOpen'
     },
     {
       name = 'Attach to process',
-      type = 'node2',
+      type = 'pwa-node',
       request = 'attach',
-      processId = dap_utils.pick_process
+      protocol = 'inspector',
+      processId = dap_utils.pick_process,
+      console = 'integratedTerminal',
+      internalConsoleOptions = 'neverOpen'
+    },
+    {
+      name = 'Attach to mocha',
+      type = 'pwa-node',
+      request = 'attach',
+      sourceMaps = true,
+      protocol = 'inspector',
+      processId = get_mocha_pid,
+      console = 'integratedTerminal',
+      internalConsoleOptions = 'neverOpen'
     }
   }
+
+  dap.configurations.javascript = dap.configurations.typescript
 end
 
 return M

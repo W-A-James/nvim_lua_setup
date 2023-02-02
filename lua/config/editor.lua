@@ -31,7 +31,7 @@ function M.setup()
   set.splitbelow = true
   set.splitright = true
   set.termguicolors = true
-  set.laststatus = 3
+  set.laststatus = 2
 
   -------------------------Backup locations---------------------------------------
   set.backupdir='.backup/.~/.backup,/tmp//'
