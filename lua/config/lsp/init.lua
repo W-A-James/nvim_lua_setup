@@ -1,7 +1,6 @@
 local lspconfig = require('lspconfig')
 
 local simple_servers = {
-  'tsserver',
   'bashls',
   'jsonls',
   'cssls',
@@ -39,6 +38,8 @@ local function configure_servers()
   end
 
   require('config.lsp.lua').setup(flags, rtp, on_attach)
+  require('config.lsp.deno').setup(flags, on_attach)
+  require('config.lsp.tsserver').setup(flags, on_attach)
 
   for _, lsp in pairs(simple_servers) do
     lspconfig[lsp].setup {
