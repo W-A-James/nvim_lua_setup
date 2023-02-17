@@ -38,6 +38,7 @@
         "${3rd}/luassert/library"
     ],
     "diagnostics.globals": [
-        "require"
+        "require",
+        "vim"
     ]
 }
