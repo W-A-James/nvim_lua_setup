@@ -8,7 +8,7 @@ local M = {}
 local function configureUI()
   dapui.setup()
   dapvirtual.setup({})
-  vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
+  vim.fn.sign_define('DapBreakpoint', { text = '' })
 end
 
 local function configureAdapters()

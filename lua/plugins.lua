@@ -27,6 +27,7 @@ return require('packer').startup(function(use)
   use 'projekt0n/github-nvim-theme'
   use 'EdenEast/nightfox.nvim'
   use 'dracula/vim'
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Autocompletion and LSP integration
 

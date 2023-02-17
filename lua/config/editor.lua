@@ -26,6 +26,7 @@ function M.setup()
   set.number = true
   set.mouse = 'a'
   set.colorcolumn = '80'
+  set.showtabline = 2
   set.cursorline = true
   set.encoding = 'utf-8'
   set.splitbelow = true
@@ -33,7 +34,7 @@ function M.setup()
   set.termguicolors = true
   set.laststatus = 2
 
-  -------------------------Backup locations---------------------------------------
+  -------------------------Backup locations-------------------------------------
   set.backupdir='.backup/.~/.backup,/tmp//'
   set.backupdir='.swp/.~/.swp/,/tmp//'
   set.undodir='.undo/.~/.undo/./tmp//'
@@ -42,11 +43,17 @@ function M.setup()
   G.directory='~/.swp'
   G.undodir='~/.undo'
 ---------------------------Set spell checking-----------------------------------
-
   vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = {"*.md", "*.txt"},
+    pattern = {"*.md", "*.txt", "*.org", "*.rst"},
     callback = function()
       set.spell = true
+    end
+  })
+
+--------------------------Open NvimTree on Startup------------------------------
+  vim.api.nvim_create_autocmd({"VimEnter"}, {
+    callback = function()
+      require('nvim-tree.api').tree.open()
     end
   })
 
