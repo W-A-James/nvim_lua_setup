@@ -27,7 +27,7 @@ return require('packer').startup(function(use)
   use 'projekt0n/github-nvim-theme'
   use 'EdenEast/nightfox.nvim'
   use 'dracula/vim'
-
+  use { "catppuccin/nvim", as = "catppuccin" }
   -- Autocompletion and LSP integration
 
   use 'neovim/nvim-lspconfig'
@@ -40,6 +40,9 @@ return require('packer').startup(function(use)
   -- luasnip
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip'
+
+  -- Rust
+  use 'simrat39/rust-tools.nvim'
 
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',

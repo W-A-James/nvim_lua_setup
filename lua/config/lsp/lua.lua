@@ -2,7 +2,7 @@ local lspconfig = require('lspconfig')
 
 local M = {
   setup = function(flags, runtime_path, on_attach)
-    lspconfig.sumneko_lua.setup({
+    lspconfig.lua_ls.setup({
       flags = flags,
       on_attach = on_attach,
       settings = {

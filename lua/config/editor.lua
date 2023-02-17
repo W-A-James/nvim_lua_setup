@@ -12,15 +12,15 @@ end
 
 function M.setup()
   -- Indentation
-  set.tabstop=2
-  set.shiftwidth=2
-  set.softtabstop=2
-  set.expandtab=true
-  set.smarttab=true
-  set.foldmethod='indent'
-  set.foldenable=false
-  set.foldnestmax=40
-  set.foldlevel=40
+  set.tabstop = 2
+  set.shiftwidth = 2
+  set.softtabstop = 2
+  set.expandtab = true
+  set.smarttab = true
+  set.foldmethod = 'indent'
+  set.foldenable = false
+  set.foldnestmax = 40
+  set.foldlevel = 40
 
   -- Quality of life
   set.number = true
@@ -34,19 +34,25 @@ function M.setup()
   set.laststatus = 3
 
   -------------------------Backup locations---------------------------------------
-  set.backupdir='.backup/.~/.backup,/tmp//'
-  set.backupdir='.swp/.~/.swp/,/tmp//'
-  set.undodir='.undo/.~/.undo/./tmp//'
+  set.backupdir = '.backup/.~/.backup,/tmp//'
+  set.backupdir = '.swp/.~/.swp/,/tmp//'
+  set.undodir = '.undo/.~/.undo/./tmp//'
 
-  G.backupdir='~/.backup'
-  G.directory='~/.swp'
-  G.undodir='~/.undo'
----------------------------Set spell checking-----------------------------------
+  G.backupdir = '~/.backup'
+  G.directory = '~/.swp'
+  G.undodir = '~/.undo'
+  ---------------------------Set spell checking-----------------------------------
 
-  vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = {"*.md", "*.txt"},
+  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.md", "*.txt" },
     callback = function()
       set.spell = true
+    end
+  })
+
+  vim.api.nvim_create_autocmd({ "VimEnter" }, {
+    callback = function()
+      require('nvim-tree.api').tree.open()
     end
   })
 

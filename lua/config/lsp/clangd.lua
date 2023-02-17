@@ -1,5 +1,5 @@
 local lspconfig = require('lspconfig')
-local utils = require('utils')
+local utils = require('config.utils')
 local M = {}
 
 function M.setup(flags, on_attach)
