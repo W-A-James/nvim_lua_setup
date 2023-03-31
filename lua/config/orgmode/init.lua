@@ -22,6 +22,11 @@ local M = {
           description = 'Note',
           template = '%U\n %?',
           target = '~/notes/org/notes.org'
+        },
+        k = {
+          description = 'Kickoff',
+          template = '* NODE-%?\n** Implementation Notes\n\n** Testing Notes',
+          target = '~/notes/org/kickoff.org'
         }
       }
     })

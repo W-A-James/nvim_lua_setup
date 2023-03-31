@@ -59,6 +59,7 @@ function M.setup()
   })
 
   ------------------------Restore session if pressent----------------------------
+  --[[
   vim.api.nvim_create_autocmd({ "VimEnter" }, {
     callback = function()
       for i, f in ipairs(vim.fs.dir(vim.api.nvim_getcwd())) do
@@ -66,6 +67,8 @@ function M.setup()
       end
     end
   })
+
+  ]]--
 
   configureTermDebug()
 end

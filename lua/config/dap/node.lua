@@ -5,7 +5,7 @@ local M = {}
 
 function M.setup()
   dap_vscode_js.setup({
-    adapters = {'pwa-node', 'node-terminal'}
+    adapters = { 'pwa-node', 'node-terminal' }
   })
 
   dap.adapters.node2 = {
@@ -28,19 +28,6 @@ function M.setup()
 
   dap.configurations.typescript = {
     {
-      name = 'Launch',
-      type = 'pwa-node',
-      request = 'launch',
-      runtimeExecutable = 'npx',
-      runtimeArgs = {'mocha -n inspect-brk'},
-      program = '${file}',
-      cwd = vim.fn.getcwd(),
-      protocol = 'inspector',
-      sourceMaps = true,
-      console = 'integratedTerminal',
-      internalConsoleOptions = 'neverOpen'
-    },
-    {
       name = 'Attach to process',
       type = 'pwa-node',
       request = 'attach',
@@ -50,12 +37,25 @@ function M.setup()
       internalConsoleOptions = 'neverOpen'
     },
     {
-      name = 'Attach to mocha',
+      name = 'Attach to Mocha',
       type = 'pwa-node',
       request = 'attach',
       sourceMaps = true,
       protocol = 'inspector',
       processId = get_mocha_pid,
+      console = 'integratedTerminal',
+      internalConsoleOptions = 'neverOpen'
+    },
+    {
+      name = 'Launch with Mocha',
+      type = 'pwa-node',
+      request = 'launch',
+      protocol = 'inspector',
+      trace = true,
+      runtimeExecutable = 'npx',
+      runtimeArgs = { 'mocha', '${file}' },
+      rootPath = '${workspaceFolder}',
+      cwd = '${workspaceFolder}',
       console = 'integratedTerminal',
       internalConsoleOptions = 'neverOpen'
     }
