@@ -22,10 +22,17 @@ function M.setup()
   set.foldnestmax = 40
   set.foldlevel = 40
 
+
   -- Quality of life
   set.number = true
   set.mouse = 'a'
-  set.colorcolumn = '80'
+
+  set.colorcolumn = '100'
+  set.textwidth = 100
+  set.wrap = true
+  set.linebreak = true
+  set.list = false
+
   set.cursorline = true
   set.encoding = 'utf-8'
   set.splitbelow = true
@@ -44,8 +51,8 @@ function M.setup()
   G.undodir = '~/.undo'
   ---------------------------Set spell checking-----------------------------------
 
-  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.md", "*.txt" },
+  vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    pattern = { "*.md", "*.txt", "*.org" },
     callback = function()
       set.spell = true
     end

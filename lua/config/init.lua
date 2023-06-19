@@ -16,6 +16,7 @@ local M = {
     require('config.dap').setup()
 
     require('config.orgmode').setup()
+    require('config.luasnip').setup()
   end
 }
 

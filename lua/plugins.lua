@@ -28,6 +28,7 @@ return require('packer').startup(function(use)
   use 'EdenEast/nightfox.nvim'
   use 'dracula/vim'
   use { "catppuccin/nvim", as = "catppuccin" }
+
   -- Autocompletion and LSP integration
 
   use 'neovim/nvim-lspconfig'
@@ -40,9 +41,7 @@ return require('packer').startup(function(use)
   -- luasnip
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip'
-
-  -- Rust
-  use 'simrat39/rust-tools.nvim'
+  use "rafamadriz/friendly-snippets"
 
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
@@ -50,4 +49,12 @@ return require('packer').startup(function(use)
   }
 
   use 'mfussenegger/nvim-dap'
+  use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } }
+  use { "mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"} }
+  use {
+    "microsoft/vscode-js-debug",
+    opt = true,
+    run = "npm install --legacy-peer-deps && npm run compile"
+  }
+  use 'theHamsta/nvim-dap-virtual-text'
 end)
