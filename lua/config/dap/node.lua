@@ -15,7 +15,7 @@ function M.setup()
   }
 
   local function get_mocha_pid()
-    local output = io.popen("ps ah | rg -e 'npm exec mocha.*inspect-brk' | head -1 | awk -F ' ' '{ print $1 }'")
+    local output = io.popen("ps ah | sed --quiet --regexp-extended '{s/([0-9]+).*npm exec mocha.*inspect(-brk)?/\1/; /^[0-9]+$/p}'")
     local pid
     if output ~= nil then
       pid = output:read("*a")
