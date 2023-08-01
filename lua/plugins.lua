@@ -10,11 +10,9 @@ local ensure_packer = function()
 end
 
 local packer_bootstrap = ensure_packer()
-
-vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-  use { 'nvim-treesitter/nvim-treesitter', tag = 'v0.8.0', { run = ':TSUpdate' } }
+  use { 'nvim-treesitter/nvim-treesitter', tag = 'v0.9.0', { run = ':TSUpdate' } }
   -- Orgmode
   use { 'nvim-orgmode/orgmode', config = function()
     require('orgmode').setup {}
