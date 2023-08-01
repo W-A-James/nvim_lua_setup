@@ -81,6 +81,12 @@ local M = {
   MAP_LEADER = ' '
 }
 
+local function convert_to_jira_markup()
+  -- Copy from buffer
+  -- run through pandoc
+  -- copy result to clipboard
+  -- Print success/failure message
+end
 function M.setLSPKeymaps(bufferNumber)
   for _, mapping in ipairs(M.LSP_MAPPINGS) do
     local mode, keystrokes, cb = mapping[1], mapping[2], mapping[3]
@@ -114,18 +120,26 @@ function M.setup()
   -- Copy file to clipboard
   utils.map('n', 'C', ':!cat % | clip.exe<CR><CR>:echo "Copied" @% "to clipboard"<CR>')
 
+  -- Reflow text
+  utils.map('v', '<Leader>R', ':gq<CR>')
   -- telescope
   local telescopeBuiltin = require('telescope.builtin')
 
   local function live_grep(search_dirs)
     return function()
-      telescopeBuiltin.live_grep({search_dirs=search_dirs})
+      telescopeBuiltin.live_grep({ search_dirs = search_dirs })
     end
   end
 
   local function find_files(search_dirs)
     return function()
-      telescopeBuiltin.find_files({search_dirs=search_dirs})
+      telescopeBuiltin.find_files({ search_dirs = search_dirs, hidden = true })
+    end
+  end
+
+  local function fuzzy_find()
+    return function()
+      telescopeBuiltin.current_buffer_fuzzy_find({skip_empty_lines= false})
     end
   end
 
@@ -135,6 +149,7 @@ function M.setup()
 
   utils.map_with_cb('n', '<leader>GG', live_grep({}))
   utils.map_with_cb('n', '<leader>GS', live_grep({ "src" }))
+  utils.map_with_cb('n', '<leader>gb', fuzzy_find())
   utils.map_with_cb('n', '<leader>GT', live_grep({ "test", "tests" }))
 
   utils.map_with_cb('n', '<leader>FB', telescopeBuiltin.buffers)

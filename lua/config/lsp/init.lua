@@ -40,6 +40,7 @@ local function configure_servers()
   require('config.lsp.lua').setup(flags, rtp, on_attach)
   require('config.lsp.deno').setup(flags, on_attach)
   require('config.lsp.tsserver').setup(flags, on_attach)
+  require('config.lsp.eslint').setup(flags, on_attach)
 
   for _, lsp in pairs(simple_servers) do
     lspconfig[lsp].setup {

@@ -15,7 +15,7 @@ function M.setup()
   vim.cmd "colorscheme catppuccin-macchiato"
 
   -- Lualine setup
-  require('lualine').setup ()
+  require('lualine').setup()
 end
 
 return M

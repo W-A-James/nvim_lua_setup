@@ -25,7 +25,13 @@ function M.setup()
   -- Quality of life
   set.number = true
   set.mouse = 'a'
-  set.colorcolumn = '100';
+
+  set.textwidth = 100
+  set.colorcolumn = '100'
+  -- set.wrap = true
+  -- set.linebreak = true
+  -- set.list = false
+
   set.showtabline = 2
   set.cursorline = true
   set.encoding = 'utf-8'
@@ -52,11 +58,14 @@ function M.setup()
   })
 
   --------------------------Open NvimTree on Startup------------------------------
+
   vim.api.nvim_create_autocmd({ "VimEnter" }, {
+    pattern = {"*.ts", "*.js"},
     callback = function()
       require('nvim-tree.api').tree.open()
     end
   })
+
 
   ------------------------Restore session if pressent----------------------------
   --[[
@@ -68,7 +77,8 @@ function M.setup()
     end
   })
 
-  ]]--
+  ]]
+  --
 
   configureTermDebug()
 end

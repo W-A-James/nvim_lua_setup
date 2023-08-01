@@ -4,8 +4,8 @@ local M = {
     orgmode.setup_ts_grammar()
     orgmode.setup({
       org_agenda_files = {'~/notes/org/*'},
-      org_default_notes_file = '~/notes/org/refile.org',
-      org_todo_keywords = { 'TODO', 'IN_PROGRESS', '|', 'DONE', 'GONE_AWAY' },
+      org_default_notes_file = '~/notes/org/notes.org',
+      org_todo_keywords = { 'TODO', 'WORKING', '|', 'DONE', 'GONE_AWAY' },
       win_split_mode = 'vsplit',
       org_capture_templates = {
         t = {
