@@ -27,3 +27,4 @@ Sets up autocompletion sources with [Treesitter](https://github.com/nvim-treesit
 - Install [packer](https://github.com/wbthomason/packer.nvim)
 - Open `nvim` and run `:PackerInstall` to install plugins
 - Refer to [nvim-lspconfig's language server configurations document](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md) to install desired language servers
+

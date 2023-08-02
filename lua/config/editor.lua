@@ -21,8 +21,6 @@ function M.setup()
   set.foldenable = false
   set.foldnestmax = 40
   set.foldlevel = 40
-
-
   -- Quality of life
   set.number = true
   set.mouse = 'a'
@@ -32,7 +30,6 @@ function M.setup()
   set.wrap = true
   set.linebreak = true
   set.list = false
-
   set.cursorline = true
   set.encoding = 'utf-8'
   set.splitbelow = true
@@ -49,10 +46,10 @@ function M.setup()
   G.backupdir = '~/.backup'
   G.directory = '~/.swp'
   G.undodir = '~/.undo'
-  ---------------------------Set spell checking-----------------------------------
 
-  vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    pattern = { "*.md", "*.txt", "*.org" },
+  ---------------------------Set spell checking-----------------------------------
+  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.md", "*.txt", "*.org", "*.rst" },
     callback = function()
       set.spell = true
     end

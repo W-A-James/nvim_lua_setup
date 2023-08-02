@@ -1,7 +1,18 @@
-vim.cmd [[packadd packer.nvim]]
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-  use { 'nvim-treesitter/nvim-treesitter', tag = 'v0.8.0', { run = ':TSUpdate' } }
+  use { 'nvim-treesitter/nvim-treesitter', tag = 'v0.9.0', { run = ':TSUpdate' } }
   -- Orgmode
   use { 'nvim-orgmode/orgmode', config = function()
     require('orgmode').setup {}
@@ -54,7 +65,11 @@ return require('packer').startup(function(use)
   use {
     "microsoft/vscode-js-debug",
     opt = true,
-    run = "npm install --legacy-peer-deps && npm run compile"
+    run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
   }
   use 'theHamsta/nvim-dap-virtual-text'
+
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)
