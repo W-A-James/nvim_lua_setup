@@ -49,7 +49,7 @@ local function configure_servers()
   require('config.lsp.arduino').setup(flags, on_attach)
   require('config.lsp.clangd').setup(flags, on_attach)
   require('config.lsp.pylsp').setup(flags, on_attach)
-  require('config.lsp.rust').setup(flags, on_attach)
+  -- require('config.lsp.rust').setup(flags, on_attach)
   require('config.lsp.deno').setup(flags, on_attach)
   require('config.lsp.tsserver').setup(flags, on_attach)
 
