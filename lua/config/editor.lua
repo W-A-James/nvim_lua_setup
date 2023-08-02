@@ -21,26 +21,24 @@ function M.setup()
   set.foldenable = false
   set.foldnestmax = 40
   set.foldlevel = 40
-
   -- Quality of life
   set.number = true
   set.mouse = 'a'
 
-  set.textwidth = 100
   set.colorcolumn = '100'
-  -- set.wrap = true
-  -- set.linebreak = true
-  -- set.list = false
-
-  set.showtabline = 2
+  set.textwidth = 100
+  set.wrap = true
+  set.linebreak = true
+  set.list = false
   set.cursorline = true
   set.encoding = 'utf-8'
   set.splitbelow = true
   set.splitright = true
   set.termguicolors = true
-  set.laststatus = 2
+  set.laststatus = 3
+  set.showtabline = 2
 
-  -------------------------Backup locations-------------------------------------
+  -------------------------Backup locations---------------------------------------
   set.backupdir = '.backup/.~/.backup,/tmp//'
   set.backupdir = '.swp/.~/.swp/,/tmp//'
   set.undodir = '.undo/.~/.undo/./tmp//'
@@ -57,28 +55,11 @@ function M.setup()
     end
   })
 
-  --------------------------Open NvimTree on Startup------------------------------
-
   vim.api.nvim_create_autocmd({ "VimEnter" }, {
-    pattern = {"*.ts", "*.js"},
     callback = function()
       require('nvim-tree.api').tree.open()
     end
   })
-
-
-  ------------------------Restore session if pressent----------------------------
-  --[[
-  vim.api.nvim_create_autocmd({ "VimEnter" }, {
-    callback = function()
-      for i, f in ipairs(vim.fs.dir(vim.api.nvim_getcwd())) do
-        -- Check if this is a session
-      end
-    end
-  })
-
-  ]]
-  --
 
   configureTermDebug()
 end
