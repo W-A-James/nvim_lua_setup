@@ -110,6 +110,9 @@ function M.setup()
   utils.map('n', '<c-Up>', '<c-w><c-k>')
   utils.map('n', '<c-Right>', '<c-w><c-l>')
 
+  -- jump to previous buffer
+  utils.map('n', 'gb', ':b#<CR>')
+
   utils.map("i", "<c-j>", "<Plug>luasnip-next-choice")
   utils.map("s", "<c-j>", "<Plug>luasnip-next-choice")
   utils.map("i", "<c-k>", "<Plug>luasnip-prev-choice")
@@ -122,6 +125,7 @@ function M.setup()
 
   -- Reflow text
   utils.map('v', '<Leader>R', ':gq<CR>')
+
   -- telescope
   local telescopeBuiltin = require('telescope.builtin')
 
