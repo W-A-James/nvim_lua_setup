@@ -34,7 +34,8 @@ function M.setup()
       protocol = 'inspector',
       processId = dap_utils.pick_process,
       console = 'integratedTerminal',
-      internalConsoleOptions = 'neverOpen'
+      internalConsoleOptions = 'neverOpen',
+      justMyCode = false,
     },
     {
       name = 'Attach to Mocha',
@@ -44,7 +45,8 @@ function M.setup()
       protocol = 'inspector',
       processId = get_mocha_pid,
       console = 'integratedTerminal',
-      internalConsoleOptions = 'neverOpen'
+      internalConsoleOptions = 'neverOpen',
+      justMyCode = false,
     },
     {
       name = 'Launch with Mocha',
@@ -57,7 +59,8 @@ function M.setup()
       rootPath = '${workspaceFolder}',
       cwd = '${workspaceFolder}',
       console = 'integratedTerminal',
-      internalConsoleOptions = 'neverOpen'
+      internalConsoleOptions = 'neverOpen',
+      justMyCode = false,
     }
   }
 
