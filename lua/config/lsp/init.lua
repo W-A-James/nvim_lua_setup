@@ -5,6 +5,8 @@ local simple_servers = {
   'jsonls',
   'cssls',
   'html',
+  'pylsp',
+  'gopls'
 }
 
 local rtp
@@ -18,7 +20,7 @@ local function configure_capabilities()
   return capabilities
 end
 
-local function configure_rtp()
+local function configure_runtime_path()
   local runtime_path = vim.split(package.path, ';')
   table.insert(runtime_path, "lua/?.lua")
   table.insert(runtime_path, "lua/?/init.lua")
@@ -63,7 +65,7 @@ local function configure_floating_window()
 end
 
 function M.setup()
-  configure_rtp()
+  configure_runtime_path()
 
   configure_servers()
 
