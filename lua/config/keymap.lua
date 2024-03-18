@@ -37,7 +37,7 @@ local M = {
   CMP_MAPPINGS = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<C-Space>'] = cmp.mapping.complete({}),
@@ -59,8 +59,8 @@ local M = {
     ['<S-Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.mapping.select_prev_item()
-      elseif luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -94,7 +94,7 @@ function M.setLSPKeymaps(bufferNumber)
   end
 end
 
-function M.setDAPKeymaps(bufferNumber)
+function M.setDAPKeymaps()
   for _, mapping in ipairs(M.DAP_MAPPINGS) do
     local mode, keystrokes, cb = mapping[1], mapping[2], mapping[3]
     utils.map_with_cb(mode, keystrokes, cb)
@@ -103,6 +103,7 @@ function M.setDAPKeymaps(bufferNumber)
   -- Set up debug hovering
   local keymap_restore = {}
   local api = vim.api
+
   dap.listeners.after['event_initialized']['me'] = function()
     for _, buf in pairs(api.nvim_list_bufs()) do
       local keymaps = api.nvim_buf_get_keymap(buf, 'n')
@@ -114,18 +115,26 @@ function M.setDAPKeymaps(bufferNumber)
       end
     end
     api.nvim_set_keymap(
-    'n', 'K', '<Cmd>lua require("dapui").eval()<CR>', { silent = true })
+      'n', 'K', '<Cmd>lua require("dapui").eval()<CR>', { silent = true })
   end
 
   dap.listeners.after['event_terminated']['me'] = function()
     for _, keymap in pairs(keymap_restore) do
-      vim.api.nvim_buf_set_keymap(
-        keymap.buffer,
-        keymap.mode,
-        keymap.lhs,
-        keymap.rhs ~= nil and keymap.rhs or '',
-        { silent = keymap.silent == 1 }
-      )
+      if keymap.rhs == nil then
+        vim.api.nvim_set_keymap(
+          keymap.mode,
+          keymap.lhs,
+          '',
+          { silent = keymap.silent == 1, callback = keymap.callback }
+        )
+      else
+        vim.api.nvim_buf_set_keymap(
+          keymap.mode,
+          keymap.lhs,
+          keymap.rhs,
+          { silent = keymap.silent == 1 }
+        )
+      end
     end
 
     keymap_restore = {}
@@ -181,7 +190,7 @@ function M.setup()
 
   local function fuzzy_find()
     return function()
-      telescopeBuiltin.current_buffer_fuzzy_find({skip_empty_lines= false})
+      telescopeBuiltin.current_buffer_fuzzy_find({ skip_empty_lines = false })
     end
   end
 

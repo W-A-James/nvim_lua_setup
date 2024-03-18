@@ -60,6 +60,7 @@ return require('packer').startup(function(use)
   }
 
   use 'mfussenegger/nvim-dap'
+  use 'leolulz/nvim-dap-go'
   use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap', "nvim-neotest/nvim-nio" } }
   use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
   use {

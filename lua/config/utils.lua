@@ -27,6 +27,19 @@ function M.has_value(arr, value)
   return false
 end
 
+function M.dump(object)
+  if type(object) == 'table' then
+    local s = '{ '
+    for k, v in pairs(object) do
+      if type(k) ~= 'number' then k = '"' .. k .. '"' end
+      s = s .. '[' .. k .. '] = ' .. M.dump(v) .. ','
+    end
+    return s .. '} '
+  else
+    return tostring(object)
+  end
+end
+
 M.javascript_dirs = {
   '/home/wajames/node_driver',
   '/home/wajames/js-bson'

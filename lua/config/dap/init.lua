@@ -1,4 +1,3 @@
-local utils = require('config.utils')
 local configureKeymaps = require('config.keymap').setDAPKeymaps
 local dapui = require('dapui')
 local dapvirtual = require('nvim-dap-virtual-text')
