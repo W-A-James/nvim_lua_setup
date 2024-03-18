@@ -18,4 +18,18 @@ function M.buffer_map_with_cb(bufferNumber, mode, keystrokes, callback)
   vim.api.nvim_buf_set_keymap(bufferNumber, mode, keystrokes, '', opts)
 end
 
+function M.has_value(arr, value)
+  for idx, val in ipairs(arr) do
+    if val == value then
+      return true
+    end
+  end
+  return false
+end
+
+M.javascript_dirs = {
+  '/home/wajames/node_driver',
+  '/home/wajames/js-bson'
+}
+
 return M
