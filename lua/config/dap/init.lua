@@ -13,6 +13,7 @@ end
 
 local function configureAdapters()
   require('config.dap.node').setup()
+  require('config.dap.go').setup()
 end
 
 local function configureKeymaps()
