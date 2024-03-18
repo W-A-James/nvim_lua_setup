@@ -6,7 +6,7 @@ local M = {
       on_attach = on_attach,
       flags = flags,
       root_dir = lspconfig.util.root_pattern('package.json'),
-      single_file_support = true 
+      single_file_support = true
     })
   end
 }

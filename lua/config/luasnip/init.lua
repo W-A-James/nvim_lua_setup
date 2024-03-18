@@ -8,26 +8,27 @@ function M.setup()
     typescript = {
       ls.s(
         "clientBefore", {
-        ls.t({
-          "let client: MongoClient;",
-          "",
-          "beforeEach(async function() {)",
-          "  client = this.configuration.newClient();",
-          "  await client.connect();",
-          "});"
-        }),
-      }
+          ls.t({
+            "let client: MongoClient;",
+            "",
+            "beforeEach(async function() {)",
+            "  client = this.configuration.newClient();",
+            "  await client.connect();",
+            "});"
+          }),
+        }
       )
     },
     org = {
       ls.s(
         "check", {
           ls.t(
-          ' * [ ]'
+            ' * [ ]'
           )
         }
       )
     }
   })
 end
+
 return M

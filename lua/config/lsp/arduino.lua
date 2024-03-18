@@ -7,7 +7,7 @@ function M.setup(flags, on_attach)
     flags = flags,
     on_attach = on_attach,
     cmd = {
-      HOME .."/.local/go/bin/arduino-language-server",
+      HOME .. "/.local/go/bin/arduino-language-server",
       "-cli-config", HOME .. "/.arduino15/arduino-cli.yaml",
       "-cli", HOME .. "/bin/arduino-cli",
       "-clangd", "/usr/bin/clangd-14",

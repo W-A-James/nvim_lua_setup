@@ -5,7 +5,7 @@ local M = {
         ignore = false
       },
     }
-end
+  end
 }
 
 return M

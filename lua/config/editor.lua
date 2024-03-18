@@ -64,7 +64,7 @@ function M.setup()
   })
 
   configureTermDebug()
-  
+
   -- Setup telescope to ignore certain folders
   if has_value(JS_DIRS, vim.fn.getcwd()) then
     require("telescope").setup({

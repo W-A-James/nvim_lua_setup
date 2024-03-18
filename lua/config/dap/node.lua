@@ -15,7 +15,8 @@ function M.setup()
   }
 
   local function get_mocha_pid()
-    local output = io.popen("ps ah | sed --quiet --regexp-extended '{s/([0-9]+).*npm exec mocha.*inspect(-brk)?/\1/; /^[0-9]+$/p}'")
+    local output = io.popen(
+    "ps ah | sed --quiet --regexp-extended '{s/([0-9]+).*npm exec mocha.*inspect(-brk)?/\1/; /^[0-9]+$/p}'")
     local pid
     if output ~= nil then
       pid = output:read("*a")
@@ -32,7 +33,7 @@ function M.setup()
       type = 'pwa-node',
       request = 'launch',
       runtimeExecutable = 'npx',
-      runtimeArgs = {'mocha -n inspect-brk'},
+      runtimeArgs = { 'mocha -n inspect-brk' },
       program = '${file}',
       cwd = vim.fn.getcwd(),
       protocol = 'inspector',

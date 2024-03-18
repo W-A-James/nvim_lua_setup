@@ -5,7 +5,7 @@ function M.setup()
   dap.adapters.haskell = {
     type = 'executable',
     command = 'haskell-debug-adapter',
-    args = {'--hackage-version=0.0.33.0'},
+    args = { '--hackage-version=0.0.33.0' },
   }
 
   dap.configurations.haskell = {

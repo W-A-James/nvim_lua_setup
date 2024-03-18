@@ -5,7 +5,7 @@ local G = require("config.utils").G
 
 function M.setup()
   ------------------------Gruvbox material theming--------------------------------
-  set.background='dark'
+  set.background = 'dark'
   G['gruvbox_material_background'] = 'hard'
   G['gruvbox_material_better_performance'] = '1'
   G['gruvbox_material_enable_bold'] = '1'

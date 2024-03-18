@@ -1,5 +1,5 @@
 local utils = require('config.utils')
-local mappings = require('config.keymap').DAP_MAPPINGS
+local configureKeymaps = require('config.keymap').setDAPKeymaps
 local dapui = require('dapui')
 local dapvirtual = require('nvim-dap-virtual-text')
 
@@ -9,18 +9,14 @@ local function configureUI()
   dapui.setup()
   dapvirtual.setup({})
   vim.fn.sign_define('DapBreakpoint', { text = '' })
+  vim.fn.sign_define('DapBreakpointCondition', { text = '' })
+  vim.fn.sign_define('DapStopped', { text = '=>' })
+  vim.fn.sign_define('DapLogPoint', { text = '' })
 end
 
 local function configureAdapters()
   require('config.dap.node').setup()
   require('config.dap.go').setup()
-end
-
-local function configureKeymaps()
-  for _, mapping in ipairs(mappings) do
-    local mode, keystrokes, cb = mapping[1], mapping[2], mapping[3]
-    utils.map_with_cb(mode, keystrokes, cb)
-  end
 end
 
 function M.setup()
