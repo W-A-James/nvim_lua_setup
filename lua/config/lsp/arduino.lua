@@ -2,7 +2,7 @@ local lspconfig = require('lspconfig')
 local M = {}
 
 function M.setup(flags, on_attach)
-  HOME = os.getenv('HOME')
+  local HOME = os.getenv('HOME')
   lspconfig.arduino_language_server.setup({
     flags = flags,
     on_attach = on_attach,

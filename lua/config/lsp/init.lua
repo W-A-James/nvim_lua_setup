@@ -11,7 +11,8 @@ local simple_servers = {
   'jsonls',
   'cssls',
   'html',
-  'taplo'
+  'taplo',
+  'svls'
 }
 
 local rtp
