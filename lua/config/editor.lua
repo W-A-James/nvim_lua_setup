@@ -52,22 +52,7 @@ function M.setup()
   G.undodir = '~/.undo'
 
   ---------------------------Set spell checking-----------------------------------
-  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.md", "*.txt", "*.org", "*.rst" },
-    callback = function()
-      set.spell = true
-    end
-  })
-
-  --------------------------Open NvimTree on Startup------------------------------
-
-  vim.api.nvim_create_autocmd({ "VimEnter" }, {
-    pattern = {"*.ts", "*.js"},
-    callback = function()
-      require('nvim-tree.api').tree.open()
-    end
-  })
-
+  set.spell = true
 
   ------------------------Restore session if pressent----------------------------
   --[[
@@ -83,7 +68,7 @@ function M.setup()
   --
 
   configureTermDebug()
-  
+
   -- Setup telescope to ignore certain folders
   if has_value(JS_DIRS, vim.fn.getcwd()) then
     require("telescope").setup({

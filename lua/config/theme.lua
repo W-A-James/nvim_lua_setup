@@ -12,7 +12,7 @@ function M.setup()
   G['gruvbox_material_enable_italic'] = '1'
   G['gruvbox_material_transparent_background'] = '0'
 
-  vim.cmd "colorscheme catppuccin-macchiato"
+  vim.cmd "colorscheme nordfox"
 
   -- Lualine setup
   require('lualine').setup()
