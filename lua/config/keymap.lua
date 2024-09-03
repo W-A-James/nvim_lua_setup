@@ -143,7 +143,7 @@ function M.setup()
 
   local function fuzzy_find()
     return function()
-      telescopeBuiltin.current_buffer_fuzzy_find({skip_empty_lines= false})
+      telescopeBuiltin.current_buffer_fuzzy_find({ skip_empty_lines = false })
     end
   end
 
@@ -153,11 +153,28 @@ function M.setup()
 
   utils.map_with_cb('n', '<leader>GG', live_grep({}))
   utils.map_with_cb('n', '<leader>GS', live_grep({ "src" }))
-  utils.map_with_cb('n', '<leader>gb', fuzzy_find())
+  utils.map_with_cb('n', '<leader>/', fuzzy_find())
   utils.map_with_cb('n', '<leader>GT', live_grep({ "test", "tests" }))
 
-  utils.map_with_cb('n', '<leader>FB', telescopeBuiltin.buffers)
+  utils.map_with_cb('n', '<leader>FB', function()
+    telescopeBuiltin.buffers({
+      sort_mru = true
+    })
+  end)
   utils.map_with_cb('n', '<leader>FH', telescopeBuiltin.help_tags)
+
+  utils.map_with_cb('n', '<leader>g', function()
+    local bufname = vim.api.nvim_buf_get_name(0)
+    -- if bufname starts with fugitive, close buffer
+    if string.find(bufname, 'fugitive://') == 1 then
+      vim.cmd("q")
+      print('closing diff')
+    else
+      -- else execute :Gdiffsplit
+      vim.cmd("Gdiffsplit")
+      print('showing diff')
+    end
+  end)
 end
 
 G.mapleader = M.MAP_LEADER
