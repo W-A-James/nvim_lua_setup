@@ -30,7 +30,6 @@ local M = {
         }
       }
     })
-    orgmode.setup_ts_grammar()
   end
 }
 
