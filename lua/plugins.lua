@@ -39,6 +39,7 @@ return require('packer').startup(function(use)
   use 'EdenEast/nightfox.nvim'
   use 'dracula/vim'
   use { "catppuccin/nvim", as = "catppuccin" }
+  use 'hiphish/rainbow-delimiters.nvim'
 
   -- Autocompletion and LSP integration
 
@@ -55,12 +56,12 @@ return require('packer').startup(function(use)
   use "rafamadriz/friendly-snippets"
 
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.0',
+    'nvim-telescope/telescope.nvim', tag = '0.1.8',
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
   use 'mfussenegger/nvim-dap'
-  use 'leolulz/nvim-dap-go'
+  use 'leoluz/nvim-dap-go'
   use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap', "nvim-neotest/nvim-nio" } }
   use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
   use {
