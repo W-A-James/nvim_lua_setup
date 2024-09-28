@@ -2,16 +2,16 @@ local lspconfig = require('lspconfig')
 local M = {}
 
 function M.setup(flags, on_attach)
-  local HOME = os.getenv('HOME')
+  local home = os.getenv('HOME')
   lspconfig.arduino_language_server.setup({
     flags = flags,
     on_attach = on_attach,
     cmd = {
-      HOME .. "/.local/go/bin/arduino-language-server",
-      "-cli-config", HOME .. "/.arduino15/arduino-cli.yaml",
-      "-cli", HOME .. "/bin/arduino-cli",
+      home .. "/dev/tools/arduino-language-server/arduino-language-server",
+      "-cli", home .. "/bin/arduino-cli",
+      "-cli-config", home .. "/.arduino15/arduino-cli.yaml",
       "-clangd", "/usr/bin/clangd-14",
-      "-cli-daemon-addr", "localhost:50051"
+      "-fqbn", "esp32:esp32:featheresp32"
     }
   })
 end

@@ -6,6 +6,8 @@ local simple_servers = {
   'rust_analyzer',
   'gopls',
   'ocamllsp',
+  'glsl_analyzer',
+  'racket_langserver',
   'zls',
   'bashls',
   'jsonls',
@@ -47,7 +49,7 @@ local function configure_servers()
 
   require('config.lsp.lua').setup(flags, rtp, on_attach)
   require('config.lsp.deno').setup(flags, on_attach)
-  require('config.lsp.tsserver').setup(flags, on_attach)
+  require('config.lsp.ts_ls').setup(flags, on_attach)
   require('config.lsp.eslint').setup(flags, on_attach)
   require('config.lsp.arduino').setup(flags, on_attach)
   require('config.lsp.clangd').setup(flags, on_attach)
