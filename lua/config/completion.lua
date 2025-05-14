@@ -14,8 +14,8 @@ function M.setup()
     },
     mapping = CMP_MAPPINGS,
     sources = {
-      { name = 'luasnip' },
       { name = 'nvim_lsp' },
+      { name = 'luasnip' },
       { name = 'path'},
       { name = 'buffer'},
     },

@@ -175,6 +175,14 @@ function M.setup()
       print('showing diff')
     end
   end)
+
+  utils.map('n', '<leader>t', ':sp<CR>:term<CR>')
+  utils.map('n', '<leader>vt', ':vs<CR>:term<CR>')
+
+  -- Git gutter
+  utils.map('n', ']n', ':GitGutterNextHunk<CR>')
+  utils.map('n', '[n', ':GitGutterPrevHunk<CR>')
+  utils.map('n', '<leader>n', ':GitGutterPreviewHunk<CR>')
 end
 
 G.mapleader = M.MAP_LEADER

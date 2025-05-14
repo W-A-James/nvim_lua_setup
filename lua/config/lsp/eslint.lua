@@ -11,7 +11,13 @@ local M = {
           command = 'EslintFixAll'
         })
         on_attach(client, bufnr)
-      end
+      end,
+      settings = {
+        useFlatConfig = false,
+        experimental = {
+          useFlatConfig = false
+        }
+      }
     })
   end
 }
