@@ -12,11 +12,8 @@ end
 local packer_bootstrap = ensure_packer()
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-  use { 'nvim-treesitter/nvim-treesitter', tag = 'v0.9.0', { run = ':TSUpdate' } }
-  -- Orgmode
-  use { 'nvim-orgmode/orgmode', config = function()
-    require('orgmode').setup {}
-  end }
+  use { 'nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' } }
+
   -- Git integration
   use 'tpope/vim-fugitive'
   use 'airblade/vim-gitgutter'
@@ -44,11 +41,11 @@ return require('packer').startup(function(use)
   -- Autocompletion and LSP integration
 
   use 'neovim/nvim-lspconfig'
-  use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/nvim-cmp'
 
   -- luasnip
   use 'saadparwaiz1/cmp_luasnip'
@@ -56,7 +53,7 @@ return require('packer').startup(function(use)
   use "rafamadriz/friendly-snippets"
 
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.8',
+    'nvim-telescope/telescope.nvim',
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
@@ -70,6 +67,10 @@ return require('packer').startup(function(use)
     run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
   }
   use 'theHamsta/nvim-dap-virtual-text'
+
+  -- Hugo support
+  use 'phelipetls/vim-hugo'
+  use 'ap/vim-css-color'
 
   if packer_bootstrap then
     require('packer').sync()

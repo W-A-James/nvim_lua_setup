@@ -7,7 +7,7 @@ local has_value = require("config.utils").has_value
 
 local function configureTermDebug()
   vim.cmd [[
-    packadd termdebug
+    "packadd termdebug
     tnoremap <Esc> <C-\><C-n>
   ]]
 end
@@ -24,7 +24,6 @@ function M.setup()
   set.foldnestmax = 40
   set.foldlevel = 40
   -- Quality of life
-  set.number = true
   set.mouse = 'a'
 
   set.colorcolumn = '100'
@@ -60,6 +59,12 @@ function M.setup()
   vim.api.nvim_create_autocmd({ "VimEnter" }, {
     callback = function()
       require('nvim-tree.api').tree.open()
+    end
+  })
+
+  vim.api.nvim_create_autocmd({"BufRead"}, {
+    callback = function()
+      set.number = true
     end
   })
 

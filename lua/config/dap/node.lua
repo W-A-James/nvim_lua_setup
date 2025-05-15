@@ -16,7 +16,20 @@ function M.setup()
 
   local function get_mocha_pid()
     local output = io.popen(
-    "ps ah | sed --quiet --regexp-extended '{s/([0-9]+).*npm exec mocha.*inspect(-brk)?/\1/; /^[0-9]+$/p}'")
+      "ps ah | sed --quiet --regexp-extended '{s/([0-9]+).*npm exec mocha.*inspect(-brk)?/\1/; /^[0-9]+$/p}'")
+    local pid
+    if output ~= nil then
+      pid = output:read("*a")
+      output:close()
+      return pid
+    else
+      return -1
+    end
+  end
+
+  local function get_node_pid()
+    local output = io.popen(
+      "ps ah | sed --quiet --regexp-extended '{s/([0-9]+).*node.*--inspect(-brk)?/\1/; /^[0-9]+$/p}'")
     local pid
     if output ~= nil then
       pid = output:read("*a")
@@ -29,11 +42,11 @@ function M.setup()
 
   dap.configurations.typescript = {
     {
-      name = 'Launch',
+      name = 'Launch Node',
       type = 'pwa-node',
       request = 'launch',
-      runtimeExecutable = 'npx',
-      runtimeArgs = { 'mocha -n inspect-brk' },
+      runtimeExecutable = 'node',
+      runtimeArgs = { '--inspect' },
       program = '${file}',
       cwd = vim.fn.getcwd(),
       protocol = 'inspector',
@@ -42,11 +55,21 @@ function M.setup()
       internalConsoleOptions = 'neverOpen'
     },
     {
-      name = 'Attach to process',
+      name = 'Attach to Node process',
       type = 'pwa-node',
       request = 'attach',
       protocol = 'inspector',
       processId = dap_utils.pick_process,
+      console = 'integratedTerminal',
+      internalConsoleOptions = 'neverOpen',
+      justMyCode = false,
+    },
+    {
+      name = 'Auto Attach to Node process',
+      type = 'pwa-node',
+      request = 'attach',
+      protocol = 'inspector',
+      processId = get_node_pid,
       console = 'integratedTerminal',
       internalConsoleOptions = 'neverOpen',
       justMyCode = false,

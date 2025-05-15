@@ -2,11 +2,15 @@ local lspconfig = require('lspconfig')
 
 local simple_servers = {
   'cmake',
+  'csharp_ls',
+  'gdscript',
   'hls',
   'rust_analyzer',
   'gopls',
   'ocamllsp',
   'glsl_analyzer',
+  'digestif',
+  'ltex',
   'racket_langserver',
   'zls',
   'bashls',

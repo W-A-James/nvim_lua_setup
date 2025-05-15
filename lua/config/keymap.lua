@@ -1,9 +1,9 @@
 local utils = require("config.utils")
 local G = utils.G
-local cmp = require('cmp')
 local dap = require('dap')
 local dapui = require('dapui')
 local luasnip = require('luasnip')
+local cmp = require('cmp')
 
 local function has_words_before()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
