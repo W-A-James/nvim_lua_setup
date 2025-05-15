@@ -28,8 +28,8 @@ function M.has_value(arr, value)
 end
 
 M.javascript_dirs = {
-  '/home/wajames/node_driver',
-  '/home/wajames/js-bson'
+  '~/node_driver',
+  '~/js-bson'
 }
 
 return M
