@@ -27,8 +27,28 @@ function M.setup()
           )
         }
       )
-    }
-  })
+    },
+    -- Used in hugo markdown
+    markdown = {
+      -- Figure
+      ls.s("fig", {
+        ls.t({
+          "{{< figure",
+          "src=\"\"",
+          "alt=\"\"",
+          "caption=\"\"",
+          ">}}"
+      })
+    }),
+     -- Checkbox
+      ls.s("ch", {
+        ls.t (
+          " * [ ]"
+        )
+      })
+  }
+  }
+)
 end
 
 return M

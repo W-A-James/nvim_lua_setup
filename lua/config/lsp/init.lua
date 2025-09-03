@@ -4,21 +4,23 @@ local simple_servers = {
   'cmake',
   'csharp_ls',
   'gdscript',
-  'hls',
+  --'hls',
   'rust_analyzer',
   'gopls',
-  'ocamllsp',
+  --'ocamllsp',
   'glsl_analyzer',
   'digestif',
   'ltex',
   'racket_langserver',
-  'zls',
+  --'zls',
   'bashls',
   'jsonls',
   'cssls',
   'html',
   'taplo',
-  'svls'
+  --'svls',
+  'pylsp',
+  'sqlls'
 }
 
 local rtp
@@ -57,7 +59,7 @@ local function configure_servers()
   require('config.lsp.eslint').setup(flags, on_attach)
   require('config.lsp.arduino').setup(flags, on_attach)
   require('config.lsp.clangd').setup(flags, on_attach)
-  require('config.lsp.pylsp').setup(flags, on_attach)
+  require('config.lsp.pyright').setup(flags, on_attach)
 
   for _, lsp in pairs(simple_servers) do
     lspconfig[lsp].setup {

@@ -10,7 +10,7 @@ function M.setup(flags, on_attach)
       on_attach(_, bufnr)
     end,
     settings = {
-      cmd = "clangd-14"
+      cmd = "clangd"
     }
   })
 end

@@ -37,6 +37,8 @@ return require('packer').startup(function(use)
   use 'dracula/vim'
   use { "catppuccin/nvim", as = "catppuccin" }
   use 'hiphish/rainbow-delimiters.nvim'
+  use { 'machakann/vim-colorscheme-tatami', as = "tatami" }
+  use { 'xfyuan/nightforest.nvim', as = "nightforest" }
 
   -- Autocompletion and LSP integration
 

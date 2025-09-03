@@ -4,7 +4,9 @@ local M = {}
 function M.setup(flags, on_attach)
   lspconfig.pylsp.setup({
     flags = flags,
-    on_attach = on_attach,
+    on_attach = function(client, bufnr)
+      on_attach(client, bufnr)
+    end,
     pylsp = {
       plugins = {
         flake8 = {
