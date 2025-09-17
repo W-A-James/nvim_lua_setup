@@ -205,6 +205,8 @@ function M.setup()
 
   utils.map_with_cb('n', '<leader>FB', telescopeBuiltin.buffers)
   utils.map_with_cb('n', '<leader>FH', telescopeBuiltin.help_tags)
+
+  utils.map('n', '<leader>D', ":HugoUtilSetDate<CR>")
 end
 
 G.mapleader = M.MAP_LEADER
