@@ -51,9 +51,4 @@ function M.is_markdown()
   return vim.bo.filetype == "markdown"
 end
 
-M.javascript_dirs = {
-  '/home/wajames/node_driver',
-  '/home/wajames/js-bson'
-}
-
 return M

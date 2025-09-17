@@ -2,8 +2,6 @@ local M = {}
 
 local set = require("config.utils").set
 local G = require("config.utils").G
-local JS_DIRS = require("config.utils").javascript_dirs
-local has_value = require("config.utils").has_value
 
 local function configureTermDebug()
   vim.cmd [[
@@ -70,17 +68,6 @@ function M.setup()
   })
 
   configureTermDebug()
-
-  -- Setup telescope to ignore certain folders
-  if has_value(JS_DIRS, vim.fn.getcwd()) then
-    require("telescope").setup({
-      defaults = {
-        file_ignore_patterns = {
-          "docs"
-        }
-      }
-    })
-  end
 end
 
 return M
