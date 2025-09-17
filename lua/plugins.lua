@@ -74,6 +74,9 @@ return require('packer').startup(function(use)
   use 'phelipetls/vim-hugo'
   use 'ap/vim-css-color'
 
+  -- Local plugins
+  use 'https://gitlab.com/W-A-James/nvim-hugo-utils'
+
   if packer_bootstrap then
     require('packer').sync()
   end
