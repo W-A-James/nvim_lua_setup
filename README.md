@@ -8,7 +8,7 @@ Contains preferences and theme setup as well as some useful autocommands tailore
 
 ### `lua/plugins.lua`
 
-Uses [packer](https://github.com/wbthomason/packer.nvim) to install plugins
+Uses [lazy.nvim](https://lazy.folke.io/) to install plugins
 
 ### `lua/lsp.lua`
 
@@ -24,7 +24,7 @@ Sets up autocompletion sources with [Treesitter](https://github.com/nvim-treesit
 - Install [neovim](git@github.com:neovim/neovim.git) and locate the install directory. On Unix systems this should be at `~/.config/nvim`
 - Install [lua](https://www.lua.org/download.html) and ensure the lua binary is in your system `$PATH`
 - Clone this repository as follows `git clone https://github.com/W-A-James/nvim_lua_setup.git ~/.config/nvim`. This will replace your neovim configuration, so save those settings if you would like to return to them
-- Install [packer](https://github.com/wbthomason/packer.nvim)
-- Open `nvim` and run `:PackerInstall` to install plugins
+- Install [lazy.vim](https://lazy.folke.io/)
+- Open `nvim` and run `:Lazy` to install plugins
 - Refer to [nvim-lspconfig's language server configurations document](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md) to install desired language servers
 
