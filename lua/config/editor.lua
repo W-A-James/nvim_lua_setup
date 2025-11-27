@@ -24,6 +24,7 @@ function M.setup()
   -- Quality of life
   set.mouse = 'a'
 
+  set.number = true
   set.colorcolumn = '100'
   set.textwidth = 100
   set.wrap = true
@@ -36,6 +37,7 @@ function M.setup()
   set.termguicolors = true
   set.laststatus = 3
   set.showtabline = 2
+
   G.confirm = true
 
   -------------------------Backup locations---------------------------------------
@@ -63,11 +65,16 @@ function M.setup()
 
   vim.api.nvim_create_autocmd({"BufRead"}, {
     callback = function()
-      set.number = true
     end
   })
 
   configureTermDebug()
+
+
+  ------------------Tidal cycles----------------------
+  local home = os.getenv('HOME')
+  G.tidal_target = "terminal"
+  G.tidal_boot = os.getenv("PWD") .. "/BootTidal.hs"
 end
 
 return M

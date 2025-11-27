@@ -89,9 +89,19 @@ return require("lazy").setup({
   {'phelipetls/vim-hugo'},
   {'ap/vim-css-color'},
 
+  -- Tidal cycles
+  {'https://github.com/tidalcycles/vim-tidal'},
+
   -- Local plugins
   {'https://gitlab.com/W-A-James/nvim-hugo-utils'},
   },
-  checker = { enabled = true }
+  checker = { enabled = true, notify=false },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "tutor"
+      }
+    }
+  }
 })
 

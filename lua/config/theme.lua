@@ -14,7 +14,7 @@ function M.setup()
   G['gruvbox_material_enable_italic'] = '1'
   G['gruvbox_material_transparent_background'] = '1'
 
-  vim.cmd "colorscheme dawnforest"
+  vim.cmd "colorscheme duskfox"
 
   -- Lualine setup
   require('lualine').setup({

@@ -34,10 +34,9 @@ function M.setup()
       ls.s("fig", {
         ls.t({
           "{{< figure",
-          "src=\"\"",
-          "alt=\"\"",
-          "caption=\"\"",
-          ">}}"
+          "    src=\"\"",
+          "    alt=\"\"",
+          "    caption=\"\" >}}"
       })
     }),
      -- Checkbox
@@ -45,6 +44,17 @@ function M.setup()
         ls.t (
           " * [ ]"
         )
+      }),
+    -- Filler text
+      ls.s("lipsum", {
+        ls.t({
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada ultricies nulla eget dictum.",
+          "Fusce pharetra sit amet felis bibendum varius. Cras sit amet pellentesque arcu, ut mollis elit.",
+          "Pellentesque quis ornare tortor, eu cursus velit. Vestibulum malesuada vehicula ornare.",
+          "Vivamus sed posuere diam, vitae malesuada eros. Maecenas nibh augue, mollis eget ligula sit amet, consectetur luctus quam.",
+          "Aenean feugiat vulputate egestas. Donec vel interdum augue, a aliquet ante.",
+          "Mauris semper vel tortor sit amet maximus. Vestibulum ut ipsum consectetur, auctor sapien id, ornare arcu."
+        })
       })
   }
   }
