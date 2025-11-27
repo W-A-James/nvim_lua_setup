@@ -1,12 +1,11 @@
-local lspconfig = require('lspconfig')
-
 local M = {}
 
 function M.setup(flags, on_attach)
-  lspconfig.denols.setup({
+  vim.lsp.enable('denols')
+  vim.lsp.config('denols', {
     on_attach = on_attach,
     flags = flags,
-    root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
+    root_markers = { 'deno.json', 'deno.jsonc' }
   })
 end
 

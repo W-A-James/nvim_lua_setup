@@ -1,9 +1,10 @@
-local lspconfig = require('lspconfig')
 local utils = require('config.utils')
 local M = {}
 
 function M.setup(flags, on_attach)
-  lspconfig.clangd.setup({
+  vim.lsp.enable('clangd')
+  vim.lsp.config('clangd',
+  {
     flags = flags,
     on_attach = function(_, bufnr)
       utils.map('n', '<Leader>s', ':ClangdSwitchSourceHeader<CR>')

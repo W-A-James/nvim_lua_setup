@@ -1,4 +1,3 @@
-local lspconfig = require('lspconfig')
 local M = {}
 
 local function getvenv(path)
@@ -16,7 +15,8 @@ else
 end
 
 function M.setup(flags, on_attach)
-  lspconfig.pyright.setup({
+  vim.lsp.enable('pyright')
+  vim.lsp.config('pyright', {
     flags = flags,
     on_attach = on_attach,
     settings = {

@@ -1,8 +1,8 @@
-local lspconfig = require('lspconfig')
 local M = {}
 
 function M.setup(flags, on_attach)
-  lspconfig.pylsp.setup({
+  vim.lsp.enable('pylsp')
+  vim.lsp.config('pylsp', {
     flags = flags,
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)

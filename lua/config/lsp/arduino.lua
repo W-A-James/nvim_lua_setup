@@ -1,9 +1,10 @@
-local lspconfig = require('lspconfig')
 local M = {}
 
 function M.setup(flags, on_attach)
   local home = os.getenv('HOME')
-  lspconfig.arduino_language_server.setup({
+  vim.lsp.enable('arduino_language_server')
+  vim.lsp.config('arduino_language_server',
+  {
     flags = flags,
     on_attach = on_attach,
     cmd = {

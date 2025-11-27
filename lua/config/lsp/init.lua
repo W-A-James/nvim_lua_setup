@@ -1,26 +1,22 @@
-local lspconfig = require('lspconfig')
 
 local simple_servers = {
   'cmake',
   'csharp_ls',
   'gdscript',
-  --'hls',
   'rust_analyzer',
   'gopls',
-  --'ocamllsp',
   'glsl_analyzer',
   'digestif',
-  'ltex',
   'racket_langserver',
-  --'zls',
   'bashls',
   'jsonls',
   'cssls',
   'html',
   'taplo',
-  --'svls',
-  'pylsp',
-  'sqlls'
+  -- 'pylsp',
+  'sqlls',
+  'tailwindcss',
+  'hls'
 }
 
 local rtp
@@ -62,10 +58,12 @@ local function configure_servers()
   require('config.lsp.pyright').setup(flags, on_attach)
 
   for _, lsp in pairs(simple_servers) do
-    lspconfig[lsp].setup {
+    vim.lsp.enable(lsp)
+    vim.lsp.config(lsp,
+     {
       on_attach = on_attach,
       flags = flags
-    }
+    })
   end
 end
 

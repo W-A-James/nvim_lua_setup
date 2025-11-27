@@ -1,11 +1,10 @@
-local lspconfig = require('lspconfig')
-
 local M = {
   setup = function(flags, on_attach)
-    lspconfig.ts_ls.setup({
+    vim.lsp.enable('ts_ls')
+    vim.lsp.config('ts_ls', {
       on_attach = on_attach,
       flags = flags,
-      root_dir = lspconfig.util.root_pattern('package.json'),
+      root_markers = { 'package.json' },
       single_file_support = true
     })
   end

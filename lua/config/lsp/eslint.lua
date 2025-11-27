@@ -1,17 +1,10 @@
-local lspconfig = require('lspconfig')
-
 local M = {
   setup = function(flags, on_attach)
-    lspconfig.eslint.setup({
+    vim.lsp.enable('eslint')
+    vim.lsp.config('eslint', {
       flags = flags,
-      root_dir = lspconfig.util.root_pattern('package.json'),
-      on_attach = function(client, bufnr)
-        vim.api.nvim_create_autocmd('BufWritePre', {
-          buffer = bufnr,
-          command = 'EslintFixAll'
-        })
-        on_attach(client, bufnr)
-      end
+      root_markers = { 'package.json' },
+      on_attach = on_attach
     })
   end
 }

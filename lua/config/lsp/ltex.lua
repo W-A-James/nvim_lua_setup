@@ -2,7 +2,8 @@ local lspconfig = require('lspconfig')
 
 local M = {
   setup = function(flags, runtime_path, on_attach)
-    lspconfig.ltex.setup({
+    vim.lsp.enable('ltex')
+    vim.lsp.config('ltex', {
       flags = flags,
       on_attach = on_attach,
       settings = {
