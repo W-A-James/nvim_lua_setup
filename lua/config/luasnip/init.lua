@@ -39,6 +39,12 @@ function M.setup()
           "    caption=\"\" >}}"
       })
     }),
+    -- Footnote
+      ls.s("foot", {
+        ls.t({
+          "{{<footnote title=\"\" year=\"\" authors=\"\" link=\"\">}} {{</footnote>}}"
+        })
+      }),
      -- Checkbox
       ls.s("ch", {
         ls.t (
