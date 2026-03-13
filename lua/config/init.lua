@@ -16,6 +16,7 @@ local M = {
     require('config.theme').setup()
     require('config.editor').setup()
 
+    require('config.sessions').setup()
     require('nvim-hugo-utils').setup();
   end
 }

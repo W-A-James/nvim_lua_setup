@@ -26,7 +26,6 @@ function M.setup()
 
   set.number = true
   set.colorcolumn = '100'
-  set.textwidth = 100
   set.wrap = true
   set.linebreak = true
   set.list = false

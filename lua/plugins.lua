@@ -45,6 +45,8 @@ return require("lazy").setup({
     },
   },
 
+  -- utils
+  { 'nvim-lua/plenary.nvim' },
   -- Theming
   {'sainnhe/gruvbox-material'},
   {'projekt0n/github-nvim-theme'},
@@ -90,10 +92,14 @@ return require("lazy").setup({
   {'ap/vim-css-color'},
 
   -- Tidal cycles
-  {'https://github.com/tidalcycles/vim-tidal'},
+  {'tidalcycles/vim-tidal'},
 
   -- Local plugins
   {'https://gitlab.com/W-A-James/nvim-hugo-utils'},
+
+  -- Sessions
+  {'Shatur/neovim-session-manager'}
+
   },
   checker = { enabled = true, notify=false },
   performance = {

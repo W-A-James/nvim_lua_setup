@@ -32,7 +32,7 @@ local M = {
     { 'n', '<leader>e',  vim.diagnostic.open_float },
     { 'n', '[d',         vim.diagnostic.goto_prev },
     { 'n', ']d',         vim.diagnostic.goto_next },
-    { 'n', '<leader>q',  vim.diagnostic.setloclist },
+    { 'n', '<leader>q',  vim.diagnostic.setloclist }
   },
   CMP_MAPPINGS = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -209,6 +209,8 @@ function M.setup()
   utils.map('n', '<leader>D', ":HugoUtilSetDate<CR>")
   utils.map('n', '<leader>T', ":tabe<CR>")
   utils.map('n', '<leader>tt', ":sp<CR>:term<CR>")
+
+  utils.map('n', '<leader>rr', ":LspRestart<CR>")
 end
 
 G.mapleader = M.MAP_LEADER
